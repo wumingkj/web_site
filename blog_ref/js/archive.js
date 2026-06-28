@@ -313,12 +313,12 @@ function renderArchive(posts) {
             html += `
                 <div class="archive-item">
                     <div class="archive-item-main">
-                        <a href="/blog/pages/post.html?id=${post.id}" class="archive-item-title">${post.title || '无标题'}</a>
+                        <a href="/blog_ref/pages/post.html?id=${post.id}" class="archive-item-title">${post.title || '无标题'}</a>
                         <div class="archive-item-meta">
                             <span class="meta-date">📅 ${WumingBlog.formatDate(post.created_at)}</span>
                             <span class="meta-views">👁️ ${views}</span>
                             <span class="meta-comments">💬 ${comments}</span>
-                            <a href="/blog/pages/post3d.html?id=${post.id}" class="meta-3d-link" title="3D 沉浸阅读">🚀 3D</a>
+                            <a href="/blog_ref/pages/post3d.html?id=${post.id}" class="meta-3d-link" title="3D 沉浸阅读">🚀 3D</a>
                         </div>
                     </div>
                     <div class="archive-item-tags">
@@ -365,12 +365,12 @@ function renderArchive(posts) {
                         html += `
                             <div class="archive-item">
                                 <div class="archive-item-main">
-                                    <a href="/blog/pages/post.html?id=${post.id}" class="archive-item-title">${post.title || '无标题'}</a>
+                                    <a href="/blog_ref/pages/post.html?id=${post.id}" class="archive-item-title">${post.title || '无标题'}</a>
                                     <div class="archive-item-meta">
                                         <span class="meta-date">📅 ${WumingBlog.formatDate(post.created_at)}</span>
                                         <span class="meta-views">👁️ ${views}</span>
                                         <span class="meta-comments">💬 ${comments}</span>
-                                        <a href="/blog/pages/post3d.html?id=${post.id}" class="meta-3d-link" title="3D 沉浸阅读">🚀 3D</a>
+                                        <a href="/blog_ref/pages/post3d.html?id=${post.id}" class="meta-3d-link" title="3D 沉浸阅读">🚀 3D</a>
                                     </div>
                                 </div>
                                 <div class="archive-item-tags">

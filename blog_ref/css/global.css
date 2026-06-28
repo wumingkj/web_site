@@ -393,7 +393,7 @@ body {
 /* ==================== 音乐播放器 FAB ==================== */
 .music-player-fab {
     position: fixed;
-    top: 50%;
+    top: 35%;
     left: 12px;
     transform: translateY(-50%);
     z-index: 1000;

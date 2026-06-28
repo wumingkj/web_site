@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人中心 - Wuming Blog</title>
-    <link rel="icon" href="/blog/assets/images/icon.ico">
-    <link rel="stylesheet" href="/blog/css/style.css?v=14">
-    <link rel="stylesheet" href="/blog/css/pages.css?v=10">
-    <link rel="stylesheet" href="/blog/css/toast.css?v=4">
+    <link rel="icon" href="/blog_ref/assets/images/icon.ico">
+    <link rel="stylesheet" href="/blog_ref/css/style.css?v=14">
+    <link rel="stylesheet" href="/blog_ref/css/pages.css?v=10">
+    <link rel="stylesheet" href="/blog_ref/css/toast.css?v=4">
     <style>
         .profile-container {
             max-width: 600px;
@@ -453,13 +453,13 @@
     <!-- 顶部导航栏 -->
     <nav class="navbar">
         <div class="nav-content">
-            <a href="/blog/" class="logo">✨ Wuming Blog</a>
+            <a href="/blog_ref/" class="logo">✨ Wuming Blog</a>
             <div class="nav-links">
-                <a href="/blog/">首页</a>
-                <a href="/blog/pages/archive.html">文章</a>
-                <a href="/blog/pages/tools.html">🔧 工具</a>
-                <a href="/blog/pages/about.html">关于</a>
-                <a href="/blog/pages/login.html">🔐</a>
+                <a href="/blog_ref/">首页</a>
+                <a href="/blog_ref/pages/archive.html">文章</a>
+                <a href="/blog_ref/pages/tools.html">🔧 工具</a>
+                <a href="/blog_ref/pages/about.html">关于</a>
+                <a href="/blog_ref/pages/login.html">🔐</a>
             </div>
             <button class="menu-toggle" id="menu-toggle">
                 <span></span>
@@ -478,11 +478,11 @@
             <p>🌈 永远相信美好的事情即将发生</p>
         </div>
         <nav class="sidebar-nav">
-            <a href="/blog/" class="sidebar-nav-item">🏠 首页</a>
-            <a href="/blog/pages/archive.html" class="sidebar-nav-item">📜 文章</a>
-            <a href="/blog/pages/tools.html" class="sidebar-nav-item">🔧 工具箱</a>
-            <a href="/blog/pages/about.html" class="sidebar-nav-item">👋 关于</a>
-            <a href="/blog/pages/login.html" class="sidebar-nav-item">🔐 登录</a>
+            <a href="/blog_ref/" class="sidebar-nav-item">🏠 首页</a>
+            <a href="/blog_ref/pages/archive.html" class="sidebar-nav-item">📜 文章</a>
+            <a href="/blog_ref/pages/tools.html" class="sidebar-nav-item">🔧 工具箱</a>
+            <a href="/blog_ref/pages/about.html" class="sidebar-nav-item">👋 关于</a>
+            <a href="/blog_ref/pages/login.html" class="sidebar-nav-item">🔐 登录</a>
         </nav>
     </div>
     
@@ -528,9 +528,9 @@
         </div>
     </main>
     
-    <script src="/blog/js/page-transition.js?v=4"></script>
-    <script src="/blog/js/common.js?v=23"></script>
-    <script src="/blog/js/toast.js?v=6"></script>
+    <script src="/blog_ref/js/page-transition.js?v=4"></script>
+    <script src="/blog_ref/js/common.js?v=23"></script>
+    <script src="/blog_ref/js/toast.js?v=6"></script>
     <script>
         // 头像选择列表
         const avatarList = [
@@ -558,7 +558,7 @@
             const card = document.getElementById('profileCard');
             
             try {
-                const res = await fetch('/blog/api/auth.php?action=check', { credentials: 'same-origin' });
+                const res = await fetch('/blog_ref/api/auth.php?action=check', { credentials: 'same-origin' });
                 const data = await res.json();
                 
                 if (!data.loggedin) {
@@ -566,13 +566,13 @@
                         <div class="login-prompt">
                             <h2>未登录</h2>
                             <p>请先登录后查看个人信息</p>
-                            <a href="/blog/pages/login.html" class="profile-btn primary">去登录</a>
+                            <a href="/blog_ref/pages/login.html" class="profile-btn primary">去登录</a>
                         </div>
                     `;
                     return;
                 }
                 
-                const userRes = await fetch('/blog/api/auth.php?action=user', { credentials: 'same-origin' });
+                const userRes = await fetch('/blog_ref/api/auth.php?action=user', { credentials: 'same-origin' });
                 const userData = await userRes.json();
                 
                 if (!userData.success) {
@@ -634,7 +634,7 @@
                 </div>
                 
                 <div class="profile-actions">
-                    ${user.role === 'admin' ? '<a href="/blog/pages/admin.html" class="profile-btn secondary">⚙️ 管理后台</a>' : ''}
+                    ${user.role === 'admin' ? '<a href="/blog_ref/pages/admin.html" class="profile-btn secondary">⚙️ 管理后台</a>' : ''}
                     <button class="profile-btn secondary" onclick="changePassword()">修改密码</button>
                     <button class="profile-btn danger" onclick="logout()">退出登录</button>
                 </div>
@@ -658,7 +658,7 @@
             if (!confirmed) return;
             
             try {
-                await fetch('/blog/api/auth.php?action=logout', { credentials: 'same-origin' });
+                await fetch('/blog_ref/api/auth.php?action=logout', { credentials: 'same-origin' });
                 Toast.success('已退出登录');
                 setTimeout(() => window.location.href = '/', 1000);
             } catch (err) {
@@ -885,7 +885,7 @@
                 confirmBtn.disabled = true;
                 
                 try {
-                    const res = await fetch('/blog/api/auth.php?action=update-avatar', {
+                    const res = await fetch('/blog_ref/api/auth.php?action=update-avatar', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         credentials: 'same-origin',
@@ -926,7 +926,7 @@
             btn.disabled = true;
             
             try {
-                const res = await fetch('/blog/api/auth.php?action=update-avatar', {
+                const res = await fetch('/blog_ref/api/auth.php?action=update-avatar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'same-origin',

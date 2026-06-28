@@ -10,7 +10,7 @@
     window.WumingBlog = {
         async fetchAPI(endpoint, options) {
             try {
-                var url = '/blog/api' + endpoint;
+                var url = '/blog_ref/api' + endpoint;
                 var res = await fetch(url, {
                     ...options,
                     credentials: 'same-origin',
@@ -148,8 +148,8 @@
         // ==================== 登录状态 ====================
         initAuthStatus() {
             var self = this;
-            this.loadAdminAvatar().catch(function () {});
-            fetch('/blog/api/auth.php?action=check', { credentials: 'same-origin' })
+            this.loadAdminAvatar();
+            fetch('/blog_ref/api/auth.php?action=check', { credentials: 'same-origin' })
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
                     if (data.loggedin && data.user) {
@@ -172,7 +172,7 @@
             } else {
                 this.updateAdminAvatarUI();
             }
-            fetch('/blog/data/admin_info.json?t=' + Date.now())
+            fetch('/blog_ref/data/admin_info.json?t=' + Date.now())
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
                     if (data.success && data.admin) {
@@ -213,17 +213,17 @@
         updateAuthUI(user) {
             var navLinks = document.querySelector('.nav-links');
             if (navLinks) {
-                var loginLink = navLinks.querySelector('a[href="/blog/pages/login.html"]');
+                var loginLink = navLinks.querySelector('a[href="/blog_ref/pages/login.html"]');
                 if (loginLink) {
                     var userLink = document.createElement('a');
-                    userLink.href = '/blog/pages/profile.html';
+                    userLink.href = '/blog_ref/pages/profile.html';
                     userLink.className = 'user-link';
                     userLink.innerHTML = this.renderAvatar(user.avatar) + ' ' + user.username;
                     loginLink.replaceWith(userLink);
                 }
                 if (user.role === 'admin' && !navLinks.querySelector('.admin-link') && !document.body.classList.contains('admin-page')) {
                     var adminLink = document.createElement('a');
-                    adminLink.href = '/blog/pages/admin.html';
+                    adminLink.href = '/blog_ref/pages/admin.html';
                     adminLink.className = 'admin-link';
                     adminLink.innerHTML = '⚙️ 管理';
                     adminLink.style.cssText = 'background:var(--gradient-primary);color:white;padding:8px 16px;border-radius:20px;';
@@ -234,17 +234,17 @@
             if (sidebar) {
                 var sn = sidebar.querySelector('.sidebar-nav');
                 if (sn) {
-                    var li = sn.querySelector('a[href="/blog/pages/login.html"]');
+                    var li = sn.querySelector('a[href="/blog_ref/pages/login.html"]');
                     if (li) {
                         var pi = document.createElement('a');
-                        pi.href = '/blog/pages/profile.html';
+                        pi.href = '/blog_ref/pages/profile.html';
                         pi.className = 'sidebar-nav-item';
                         pi.innerHTML = '<span>' + this.renderAvatar(user.avatar, 24) + '</span> ' + user.username;
                         li.replaceWith(pi);
                     }
                     if (user.role === 'admin' && !sn.querySelector('.admin-link') && !document.body.classList.contains('admin-page')) {
                         var al = document.createElement('a');
-                        al.href = '/blog/pages/admin.html';
+                        al.href = '/blog_ref/pages/admin.html';
                         al.className = 'sidebar-nav-item admin-link';
                         al.innerHTML = '<span>⚙️</span> 管理';
                         sn.appendChild(al);
@@ -763,6 +763,18 @@
             return html;
         },
 
+        formatDate(dateStr) {
+            if (!dateStr) return '';
+            var d = new Date(dateStr);
+            if (isNaN(d.getTime())) return dateStr;
+            var y = d.getFullYear();
+            var m = ('0' + (d.getMonth() + 1)).slice(-2);
+            var day = ('0' + d.getDate()).slice(-2);
+            var h = ('0' + d.getHours()).slice(-2);
+            var min = ('0' + d.getMinutes()).slice(-2);
+            return y + '-' + m + '-' + day + ' ' + h + ':' + min;
+        },
+
         showLightbox(src) {
             var existing = document.getElementById('lightbox-overlay');
             if (existing) existing.remove();
@@ -807,5 +819,10 @@
         if (typeof Toast !== 'undefined') {
             Toast.init();
         }
+    });
+
+    // SPA 页面切换后重新渲染全局 UI（头像等）
+    document.addEventListener('page:loaded', function () {
+        WumingBlog.updateAdminAvatarUI();
     });
 })();

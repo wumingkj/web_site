@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wuming Blog ✨ 无名小破站</title>
-    <link rel="icon" href="/blog/assets/images/icon.ico">
+    <link rel="icon" href="/blog_ref/assets/images/icon.ico">
     <link rel="stylesheet" href="/blog_ref/css/global.css?v=1">
     <link rel="stylesheet" href="/blog_ref/css/home.css?v=10">
     <link rel="stylesheet" href="/blog_ref/css/pages.css?v=10">
@@ -27,16 +27,16 @@
 
 <!-- 导航栏 -->
 <nav class="navbar">
-    <a href="/blog/" class="logo">
+    <a href="/blog_ref/" class="logo">
         <span>✨</span>
         Wuming Blog
     </a>
     <div class="nav-links" id="nav-links">
-        <a href="/blog/">首页</a>
-        <a href="/blog/pages/archive.html">文章</a>
-        <a href="/blog/pages/tools.html">🔧 工具</a>
-        <a href="/blog/pages/about.html">关于</a>
-        <a href="/blog/pages/login.html" class="login-link">🔐</a>
+        <a href="/blog_ref/">首页</a>
+        <a href="/blog_ref/pages/archive.html">文章</a>
+        <a href="/blog_ref/pages/tools.html">🔧 工具</a>
+        <a href="/blog_ref/pages/about.html">关于</a>
+        <a href="/blog_ref/pages/login.html" class="login-link">🔐</a>
     </div>
     <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
         <span></span><span></span><span></span>
@@ -51,19 +51,19 @@
         <p>🌈 永远相信美好的事情即将发生</p>
     </div>
     <div class="sidebar-nav">
-        <a href="/blog/" class="sidebar-nav-item active">
+        <a href="/blog_ref/" class="sidebar-nav-item active">
             <span>🏠</span> 首页
         </a>
-        <a href="/blog/pages/archive.html" class="sidebar-nav-item">
+        <a href="/blog_ref/pages/archive.html" class="sidebar-nav-item">
             <span>📜</span> 文章
         </a>
-        <a href="/blog/pages/tools.html" class="sidebar-nav-item">
+        <a href="/blog_ref/pages/tools.html" class="sidebar-nav-item">
             <span>🔧</span> 工具箱
         </a>
-        <a href="/blog/pages/about.html" class="sidebar-nav-item">
+        <a href="/blog_ref/pages/about.html" class="sidebar-nav-item">
             <span>👋</span> 关于
         </a>
-        <a href="/blog/pages/login.html" class="sidebar-nav-item">
+        <a href="/blog_ref/pages/login.html" class="sidebar-nav-item">
             <span>🔐</span> 登录
         </a>
     </div>
@@ -113,14 +113,14 @@
     <div class="lrc-float-bot" id="lrc-float-bot">♪ 暂未播放</div>
 </div>
 
-<!-- Live2D 看板娘 -->
-<script src="/blog/live2d/live2d_3/js/pixi.min.js"></script>
-<script src="/blog/live2d/live2d_3/js/live2dcubismcore.min.js"></script>
-<script src="/blog/live2d/live2d_3/js/live2dcubismframework.js"></script>
-<script src="/blog/live2d/live2d_3/js/live2dcubismpixi.js"></script>
-<script src="/blog/live2d/live2d_3/js/charData.js"></script>
-<script src="/blog/live2d/live2d_3/js/l2d.js"></script>
-<script src="/blog_ref/js/kanban.js"></script>
+<!-- Live2D 看板娘（全局，在 #app 外，页面切换不中断） -->
+<script src="/blog_ref/live2d/core/pixi.min.js"></script>
+<script src="/blog_ref/live2d/core/live2dcubismcore.min.js"></script>
+<script src="/blog_ref/live2d/core/live2dcubismframework.js"></script>
+<script src="/blog_ref/live2d/core/live2dcubismpixi.js"></script>
+<script src="/blog_ref/live2d/core/l2d.js"></script>
+<script src="/blog_ref/live2d/charData.js"></script>
+<script src="/blog_ref/js/live2d_manager.js"></script>
 
 <!-- ==================== 页面内容层（可切换） ==================== -->
 <main class="home-container" id="app">
@@ -135,8 +135,8 @@
                 一个热爱嵌入式开发的程序员的小天地
             </p>
             <div class="hero-buttons">
-                <a href="/blog/pages/archive.html" class="btn btn-primary">📖 浏览文章</a>
-                <a href="/blog/pages/about.html" class="btn btn-secondary">👋 关于我</a>
+                <a href="/blog_ref/pages/archive.html" class="btn btn-primary">📖 浏览文章</a>
+                <a href="/blog_ref/pages/about.html" class="btn btn-secondary">👋 关于我</a>
             </div>
         </div>
     </section>
@@ -167,17 +167,17 @@
     </section>
 
     <section class="nav-cards">
-        <a href="/blog/pages/archive.html" class="nav-card scroll-reveal scroll-delay-1">
+        <a href="/blog_ref/pages/archive.html" class="nav-card scroll-reveal scroll-delay-1">
             <div class="card-icon">📜</div>
             <h3>文章</h3>
             <p>浏览所有文章内容</p>
         </a>
-        <a href="/blog/pages/tools.html" class="nav-card scroll-reveal scroll-delay-2">
+        <a href="/blog_ref/pages/tools.html" class="nav-card scroll-reveal scroll-delay-2">
             <div class="card-icon">🔧</div>
             <h3>工具箱</h3>
             <p>实用开发小工具</p>
         </a>
-        <a href="/blog/pages/about.html" class="nav-card scroll-reveal scroll-delay-3">
+        <a href="/blog_ref/pages/about.html" class="nav-card scroll-reveal scroll-delay-3">
             <div class="card-icon">👋</div>
             <h3>关于</h3>
             <p>了解更多关于我</p>

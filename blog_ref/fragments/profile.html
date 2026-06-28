@@ -186,13 +186,13 @@
     async function loadProfile() {
         var card = document.getElementById('profileCard');
         try {
-            var res = await fetch('/blog/api/auth.php?action=check', { credentials: 'same-origin' });
+            var res = await fetch('/blog_ref/api/auth.php?action=check', { credentials: 'same-origin' });
             var data = await res.json();
             if (!data.loggedin) {
-                card.innerHTML = '<div class="login-prompt"><h2>未登录</h2><p>请先登录后查看个人信息</p><a href="/blog/pages/login.html" class="profile-btn primary">去登录</a></div>';
+                card.innerHTML = '<div class="login-prompt"><h2>未登录</h2><p>请先登录后查看个人信息</p><a href="/blog_ref/pages/login.html" class="profile-btn primary">去登录</a></div>';
                 return;
             }
-            var userRes = await fetch('/blog/api/auth.php?action=user', { credentials: 'same-origin' });
+            var userRes = await fetch('/blog_ref/api/auth.php?action=user', { credentials: 'same-origin' });
             var userData = await userRes.json();
             if (!userData.success) {
                 card.innerHTML = '<div class="login-prompt"><h2>获取用户信息失败</h2><p>请刷新页面重试</p></div>';
@@ -225,7 +225,7 @@
             '<div class="info-item"><span class="info-label">注册时间</span><span class="info-value">' + formatDate(user.created_at) + '</span></div>' +
             '</div>' +
             '<div class="profile-actions">' +
-            (user.role === 'admin' ? '<a href="/blog/pages/admin.html" class="profile-btn secondary">⚙️ 管理后台</a>' : '') +
+            (user.role === 'admin' ? '<a href="/blog_ref/pages/admin.html" class="profile-btn secondary">⚙️ 管理后台</a>' : '') +
             '<button class="profile-btn secondary" onclick="window._profileChangePassword()">修改密码</button>' +
             '<button class="profile-btn danger" onclick="window._profileLogout()">退出登录</button>' +
             '</div>';
@@ -241,9 +241,9 @@
         var confirmed = await Toast.confirm({ message: '退出登录后需要重新登录，确定要退出吗？', title: '退出登录', type: 'warning', confirmText: '退出', cancelText: '取消' });
         if (!confirmed) return;
         try {
-            await fetch('/blog/api/auth.php?action=logout', { credentials: 'same-origin' });
+            await fetch('/blog_ref/api/auth.php?action=logout', { credentials: 'same-origin' });
             Toast.success('已退出登录');
-            setTimeout(function() { window.location.href = '/blog/'; }, 1000);
+            setTimeout(function() { window.location.href = '/blog_ref/'; }, 1000);
         } catch (err) { Toast.error('退出失败，请重试'); }
     };
 
@@ -322,7 +322,7 @@
                 xhr.addEventListener('timeout', function() { progressOverlay.remove(); confirmBtn.textContent = originalText; confirmBtn.disabled = false; Toast.error('上传超时'); resolve(); });
                 xhr.addEventListener('abort', function() { progressOverlay.remove(); confirmBtn.textContent = originalText; confirmBtn.disabled = false; resolve(); });
                 xhr.timeout = 120000;
-                xhr.open('POST', '/blog/api/auth.php?action=upload-avatar');
+                xhr.open('POST', '/blog_ref/api/auth.php?action=upload-avatar');
                 xhr.withCredentials = true;
                 xhr.send(formData);
             });
@@ -332,7 +332,7 @@
             confirmBtn.textContent = '保存中...';
             confirmBtn.disabled = true;
             try {
-                var res = await fetch('/blog/api/auth.php?action=update-avatar', {
+                var res = await fetch('/blog_ref/api/auth.php?action=update-avatar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'same-origin',

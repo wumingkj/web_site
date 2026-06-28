@@ -66,7 +66,7 @@ async function init3DPage() {
         initThree();
         initFloatOverlay();
 
-        const res = await fetch(`/blog/api/post.php?id=${postId}`, { credentials: 'same-origin' });
+        const res = await fetch(`/blog_ref/api/post.php?id=${postId}`, { credentials: 'same-origin' });
         const data = await res.json();
         if (!data?.success) { hideLoading(); showFatal(data?.error || '加载失败'); return; }
         buildWorld(data.data);
@@ -583,7 +583,7 @@ function createCommentBillboard(z) {
 async function loadComments() {
     if (!postId) return;
     try {
-        const res = await fetch(`/blog/api/comments.php?post_id=${postId}`, { credentials: 'same-origin' });
+        const res = await fetch(`/blog_ref/api/comments.php?post_id=${postId}`, { credentials: 'same-origin' });
         const data = await res.json();
         let md;
         if (data?.success && data.data?.length > 0) {
@@ -725,9 +725,9 @@ function checkPortals() {
         const dist = camera.position.distanceTo(p.group.position);
         if (dist < 3) {
             if (p.isHome) {
-                window.location.replace('/blog/');
+                window.location.replace('/blog_ref/');
             } else {
-                window.location.replace(`/blog/pages/post3d.html?id=${p.targetId}`);
+                window.location.replace(`/blog_ref/pages/post3d.html?id=${p.targetId}`);
             }
         }
     });
@@ -1011,7 +1011,7 @@ function openCommentPanel() {
     body.innerHTML += `
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);">
             <div style="color:rgba(255,255,255,0.5);font-size:12px;margin-bottom:10px;">发表评论请前往普通模式</div>
-            <a href="/blog/pages/post.html?id=${postId}" style="color:var(--primary);font-size:13px;text-decoration:none;border-bottom:1px solid rgba(77,171,247,0.3);">📖 前往普通模式评论 →</a>
+            <a href="/blog_ref/pages/post.html?id=${postId}" style="color:var(--primary);font-size:13px;text-decoration:none;border-bottom:1px solid rgba(77,171,247,0.3);">📖 前往普通模式评论 →</a>
         </div>`;
 
     document.getElementById('content-panel').classList.remove('hidden');
@@ -1122,8 +1122,8 @@ function bindUI() {
 
     // 普通模式按钮
     document.getElementById('nav-mode-btn').addEventListener('click', () => {
-        if (postId) window.location.href = `/blog/pages/post.html?id=${postId}`;
-        else window.location.href = '/blog/';
+        if (postId) window.location.href = `/blog_ref/pages/post.html?id=${postId}`;
+        else window.location.href = '/blog_ref/';
     });
 }
 
@@ -1301,7 +1301,7 @@ function showFatal(msg, detail) {
                 <h1 style="font-family:'Segoe UI',system-ui,sans-serif;font-size:24px;margin-bottom:8px">${msg}</h1>
                 <p style="color:rgba(255,255,255,0.4);margin-bottom:20px">无法加载 3D 文章</p>
                 ${detail ? `<p style="color:rgba(255,100,100,0.7);font-size:13px;margin-bottom:20px;font-family:monospace">${detail}</p>` : ''}
-                <a href="/blog/" style="color:var(--primary)">← 返回首页</a>
+                <a href="/blog_ref/" style="color:var(--primary)">← 返回首页</a>
             </div>
         </div>`;
 }

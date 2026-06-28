@@ -351,7 +351,7 @@ const MouseChaserGame = {
      */
     async init() {
         try {
-            const res = await fetch('/blog/data/config.json');
+            const res = await fetch('/blog_ref/data/config.json');
             const data = await res.json();
             
             if (data.effects && data.effects.mouseChaser) {

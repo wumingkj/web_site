@@ -12,9 +12,8 @@
     // 全局脚本 basename（已在 index.html 加载，跳过不重复加载）
     var GLOBAL = [
         'router.js', 'global.js', 'toast.js', 'effects.js', 'home.js',
-        'kanban.js', 'pixi.min.js', 'live2dcubismcore.min.js',
-        'live2dcubismframework.js', 'live2dcubismpixi.js',
-        'charData.js', 'l2d.js', 'marked.min.js'
+        'live2d_manager.js', 'pixi.min.js', 'live2dcubismcore.min.js',
+        'live2dcubismframework.js', 'live2dcubismpixi.js', 'l2d.js', 'charData.js', 'marked.min.js'
     ];
 
     function isGlobal(src) {
@@ -33,8 +32,8 @@
     function hrefToFragment(href) {
         // 去掉 query 和 hash
         var path = href.split('?')[0].split('#')[0];
-        // 去掉开头的 /blog/
-        path = path.replace(/^\/blog\//, '');
+        // 去掉开头的 /blog_ref/
+        path = path.replace(/^\/blog_ref\//, '');
         // 首页
         if (path === '' || path === 'index.html') return '/blog_ref/fragments/home.html';
         // 去掉 pages/ 前缀
@@ -100,7 +99,7 @@
 
                     // 2. 替换内容
                     appEl.innerHTML = html;
-                    appEl.className = (href === '/blog/' || href === '/blog/index.html')
+                    appEl.className = (href === '/blog_ref/' || href === '/blog_ref/index.html')
                         ? 'home-container'
                         : 'page-container';
 
@@ -122,7 +121,7 @@
                     }
 
                     // 4.5 先派发 page:loaded（在加载外部脚本前，避免重复初始化）
-                    document.dispatchEvent(new CustomEvent('page:loaded'));
+                    document.dispatchEvent(new CustomEvent('page:loaded', { detail: { href: href } }));
 
                     // 5. 加载外部脚本（跳过全局脚本）
                     var extScripts = appEl.querySelectorAll('script[src]');
@@ -183,8 +182,8 @@
         if (href.indexOf('post3d') !== -1 ||
             href.indexOf('/admin') !== -1 ||
             href.indexOf('/login') !== -1 ||
-            href === '/blog/50x.html' ||
-            href === '/blog/404.html') return;
+            href === '/blog_ref/50x.html' ||
+            href === '/blog_ref/404.html') return;
 
         e.preventDefault();
 

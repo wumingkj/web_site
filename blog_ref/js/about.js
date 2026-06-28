@@ -20,7 +20,7 @@ async function initAboutPage() {
 
         // 后台异步更新头像
         if (!cachedAvatar || !cacheTime || Date.now() - parseInt(cacheTime) >= 86400000) {
-            fetch('/blog/data/admin_info.json?t=' + Date.now())
+            fetch('/blog_ref/data/admin_info.json?t=' + Date.now())
                 .then(res => res.json())
                 .then(adminData => {
                     if (adminData.success && adminData.admin) {
@@ -68,7 +68,7 @@ function renderAbout(data) {
 function updateAvatar(avatar) {
     const avatarEl = document.querySelector('.about-avatar');
     if (!avatarEl) return;
-    if (avatar && (avatar.startsWith('data:image') || avatar.startsWith('/blog/data/avatars') || avatar.startsWith('/data/avatars'))) {
+    if (avatar && (avatar.startsWith('data:image') || avatar.startsWith('/blog_ref/data/avatars') || avatar.startsWith('/data/avatars'))) {
         avatarEl.innerHTML = '<img src="' + avatar + '" alt="avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
     } else {
         avatarEl.textContent = avatar || '💫';

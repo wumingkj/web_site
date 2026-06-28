@@ -19,9 +19,11 @@ async function initHomePage() {
             if (data.announcements) {
                 renderAnnouncements(data.announcements);
             }
+        } else {
+            console.warn('Home: API 返回异常', data);
         }
     } catch (error) {
-        console.error('Init error:', error);
+        console.error('Home: 初始化失败', error);
     }
 }
 
@@ -30,7 +32,7 @@ function renderTags(tags) {
     if (!container) return;
 
     const html = tags.map(tag => 
-        `<a href="/blog/pages/archive.html?tag=${encodeURIComponent(tag.slug)}" class="cloud-tag" style="--tag-color: ${tag.color || '#4dabf7'}">${tag.name}<small>${tag.post_count || 0}</small></a>`
+        `<a href="/blog_ref/pages/archive.html?tag=${encodeURIComponent(tag.slug)}" class="cloud-tag" style="--tag-color: ${tag.color || '#4dabf7'}">${tag.name}<small>${tag.post_count || 0}</small></a>`
     ).join('');
 
     container.innerHTML = html;
@@ -43,7 +45,7 @@ function renderCategories(categories) {
     const defaultIcons = ['💻', '🎨', '⚙️', '📝', '🌈', '🔧', '📱', '🚀'];
 
     const html = categories.map((cat, i) => 
-        `<a href="/blog/pages/archive.html?category=${encodeURIComponent(cat.slug)}" class="cloud-tag" style="--tag-color: ${['#ff6b6b','#ffa94d','#69db7c','#4dabf7','#9775fa','#e599f7','#ffd43b','#38d9a9'][i % 8]}">${cat.icon || defaultIcons[i % 8]} ${cat.name}<small>${cat.post_count || 0}</small></a>`
+        `<a href="/blog_ref/pages/archive.html?category=${encodeURIComponent(cat.slug)}" class="cloud-tag" style="--tag-color: ${['#ff6b6b','#ffa94d','#69db7c','#4dabf7','#9775fa','#e599f7','#ffd43b','#38d9a9'][i % 8]}">${cat.icon || defaultIcons[i % 8]} ${cat.name}<small>${cat.post_count || 0}</small></a>`
     ).join('');
 
     container.innerHTML = html;
@@ -126,8 +128,9 @@ if (document.readyState === 'loading') {
     initHomePage();
 }
 
-document.addEventListener('page:loaded', function () {
-    if (window.location.pathname === '/blog/' || window.location.pathname === '/blog/index.html') {
+document.addEventListener('page:loaded', function (e) {
+    var href = e.detail && e.detail.href;
+    if (href === '/blog_ref/' || href === '/blog_ref/index.html') {
         initHomePage();
     }
 });

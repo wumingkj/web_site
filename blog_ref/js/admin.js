@@ -27,7 +27,7 @@ if (document.readyState === 'loading') {
 // 检查登录状态
 async function checkLogin() {
     try {
-        const res = await fetch('/blog/api/auth.php?action=check', {
+        const res = await fetch('/blog_ref/api/auth.php?action=check', {
             credentials: 'same-origin'
         });
         const data = await res.json();
@@ -37,7 +37,7 @@ async function checkLogin() {
         // 检查是否登录
         if (!data.success || !data.loggedin || !data.user) {
             console.log('未登录，跳转到登录页');
-            window.location.href = '/blog/pages/login.html';
+            window.location.href = '/blog_ref/pages/login.html';
             return;
         }
 
@@ -52,14 +52,14 @@ async function checkLogin() {
         updateUserInfo();
     } catch (err) {
         console.error('登录检查失败:', err);
-        window.location.href = '/blog/pages/login.html';
+        window.location.href = '/blog_ref/pages/login.html';
     }
 }
 
 // 渲染头像（支持表情和图片）
 function renderAvatar(avatar, size = 60) {
     if (!avatar) return '🧑‍💻';
-    if (avatar.startsWith('data:image') || avatar.startsWith('/blog/data/avatars') || avatar.startsWith('/data/avatars')) {
+    if (avatar.startsWith('data:image') || avatar.startsWith('/blog_ref/data/avatars') || avatar.startsWith('/data/avatars')) {
         return `<img src="${avatar}" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover;">`;
     }
     return avatar;
@@ -81,7 +81,7 @@ function updateUserInfo() {
     // 侧边栏
     const sidebarAvatar = document.getElementById('sidebarAvatar');
     if (sidebarAvatar) {
-        if (avatar && (avatar.startsWith('data:image') || avatar.startsWith('/blog/data/avatars') || avatar.startsWith('/data/avatars'))) {
+        if (avatar && (avatar.startsWith('data:image') || avatar.startsWith('/blog_ref/data/avatars') || avatar.startsWith('/data/avatars'))) {
             sidebarAvatar.innerHTML = renderAvatar(avatar, 60);
         } else {
             sidebarAvatar.textContent = avatar || '🧑‍💻';
@@ -95,7 +95,7 @@ function updateUserInfo() {
     // 管理侧边栏
     const adminAvatar = document.getElementById('adminAvatar');
     if (adminAvatar) {
-        if (avatar && (avatar.startsWith('data:image') || avatar.startsWith('/blog/data/avatars') || avatar.startsWith('/data/avatars'))) {
+        if (avatar && (avatar.startsWith('data:image') || avatar.startsWith('/blog_ref/data/avatars') || avatar.startsWith('/data/avatars'))) {
             adminAvatar.innerHTML = renderAvatar(avatar, 60);
         } else {
             adminAvatar.textContent = avatar || '🧑‍💻';
@@ -189,9 +189,9 @@ function initLogout() {
         if (!confirmed) return;
 
         try {
-            await fetch('/blog/api/auth.php?action=logout');
+            await fetch('/blog_ref/api/auth.php?action=logout');
             Toast.success('已退出登录');
-            setTimeout(() => window.location.href = '/blog/pages/login.html', 1000);
+            setTimeout(() => window.location.href = '/blog_ref/pages/login.html', 1000);
         } catch (err) {
             Toast.error('退出失败，请重试');
         }
@@ -227,7 +227,7 @@ function initChangePassword() {
         }
         
         try {
-            const res = await fetch('/blog/api/auth.php?action=change-password', {
+            const res = await fetch('/blog_ref/api/auth.php?action=change-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'same-origin',
@@ -261,7 +261,7 @@ async function loadPosts() {
     container.innerHTML = '<div class="loading">加载中...</div>';
 
     try {
-        const url = currentPostStatus ? `/blog/api/posts.php?status=${currentPostStatus}` : '/blog/api/posts.php';
+        const url = currentPostStatus ? `/blog_ref/api/posts.php?status=${currentPostStatus}` : '/blog_ref/api/posts.php';
         const res = await fetch(url);
         const text = await res.text();
         let data;
@@ -314,7 +314,7 @@ async function loadComments() {
     container.innerHTML = '<div class="loading">加载中...</div>';
     
     try {
-        const res = await fetch('/blog/api/comments.php?all=true');
+        const res = await fetch('/blog_ref/api/comments.php?all=true');
         const data = await res.json();
         
         const comments = data.comments || [];
@@ -353,7 +353,7 @@ async function loadStats() {
     container.innerHTML = '<div class="loading">加载中...</div>';
 
     try {
-        const res = await fetch('/blog/api/stats.php?all=true');
+        const res = await fetch('/blog_ref/api/stats.php?all=true');
         const data = await res.json();
         
         // API 返回 stats 字段
@@ -454,7 +454,7 @@ function closeModal() {
 // 编辑文章
 async function editPost(id) {
     try {
-        const res = await fetch(`/blog/api/post.php?id=${id}&noView=1`);
+        const res = await fetch(`/blog_ref/api/post.php?id=${id}&noView=1`);
         const post = await res.json();
 
         if (post.post) {
@@ -481,7 +481,7 @@ async function savePost() {
     }
     
     try {
-        const url = id ? `/blog/api/post.php?id=${id}` : '/blog/api/post.php';
+        const url = id ? `/blog_ref/api/post.php?id=${id}` : '/blog_ref/api/post.php';
         const method = id ? 'PUT' : 'POST';
         
         const res = await fetch(url, {
@@ -524,7 +524,7 @@ async function deletePost(id) {
     if (!confirmed) return;
     
     try {
-        const res = await fetch(`/blog/api/post.php?id=${id}`, {
+        const res = await fetch(`/blog_ref/api/post.php?id=${id}`, {
             method: 'DELETE',
             credentials: 'same-origin'
         });
@@ -554,7 +554,7 @@ async function deleteComment(id) {
     if (!confirmed) return;
     
     try {
-        const res = await fetch(`/blog/api/comments.php?id=${id}`, {
+        const res = await fetch(`/blog_ref/api/comments.php?id=${id}`, {
             method: 'DELETE',
             credentials: 'same-origin'
         });
@@ -584,8 +584,8 @@ function escapeHtml(text) {
 async function loadCategoriesAndTags() {
     try {
         const [catRes, tagRes] = await Promise.all([
-            fetch('/blog/api/categories.php'),
-            fetch('/blog/api/tags.php')
+            fetch('/blog_ref/api/categories.php'),
+            fetch('/blog_ref/api/tags.php')
         ]);
         
         const catData = await catRes.json();

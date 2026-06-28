@@ -24,7 +24,7 @@ function renderCategories(categories) {
     const icons = ['💻', '🎨', '⚙️', '📝', '🌈', '🔧', '📱', '🚀'];
 
     const html = categories.map((cat, index) => `
-        <a href="/blog/pages/archive.html?category=${cat.slug || ''}" class="category-card">
+        <a href="/blog_ref/pages/archive.html?category=${cat.slug || ''}" class="category-card">
             <div class="category-icon">${cat.icon || icons[index % icons.length]}</div>
             <h2 class="category-name">${cat.name || '未分类'}</h2>
             <p class="category-desc">${cat.description || '暂无描述'}</p>

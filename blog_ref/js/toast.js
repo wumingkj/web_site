@@ -397,7 +397,7 @@ const AnnouncementBar = {
      */
     async load() {
         try {
-            const res = await fetch('/blog/api/announcement.php');
+            const res = await fetch('/blog_ref/api/announcement.php');
             const data = await res.json();
             
             if (data.success && data.announcements) {

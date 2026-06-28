@@ -57,7 +57,7 @@ function initLoginPage() {
             btn.textContent = '登录中...';
 
             try {
-                var res = await fetch('/blog/api/auth.php?action=login', {
+                var res = await fetch('/blog_ref/api/auth.php?action=login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: username, password: password })
@@ -69,9 +69,9 @@ function initLoginPage() {
                     showSuccess('登录成功！正在跳转...');
                     setTimeout(function () {
                         if (data.user && data.user.role === 'admin') {
-                            window.location.href = '/blog/pages/admin.html';
+                            window.location.href = '/blog_ref/pages/admin.html';
                         } else {
-                            window.location.href = '/blog/';
+                            window.location.href = '/blog_ref/';
                         }
                     }, 1500);
                 } else {
@@ -122,7 +122,7 @@ function initLoginPage() {
             btn.textContent = '注册中...';
 
             try {
-                var res = await fetch('/blog/api/auth.php?action=register', {
+                var res = await fetch('/blog_ref/api/auth.php?action=register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: username, email: email, password: password })
@@ -133,7 +133,7 @@ function initLoginPage() {
                 if (data.success) {
                     showSuccess('注册成功！正在跳转...');
                     setTimeout(function () {
-                        window.location.href = '/blog/';
+                        window.location.href = '/blog_ref/';
                     }, 1000);
                 } else {
                     showError(data.message || '注册失败');
@@ -148,14 +148,14 @@ function initLoginPage() {
     }
 
     // 检查是否已登录
-    fetch('/blog/api/auth.php?action=check', { credentials: 'same-origin' })
+    fetch('/blog_ref/api/auth.php?action=check', { credentials: 'same-origin' })
         .then(function (res) { return res.json(); })
         .then(function (data) {
             if (data.success && data.loggedin && data.user) {
                 if (data.user.role === 'admin') {
-                    window.location.href = '/blog/pages/admin.html';
+                    window.location.href = '/blog_ref/pages/admin.html';
                 } else {
-                    window.location.href = '/blog/';
+                    window.location.href = '/blog_ref/';
                 }
             }
         })

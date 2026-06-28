@@ -40,7 +40,7 @@ async function initPostPage() {
 
 async function checkLoginStatus() {
     try {
-        const res = await fetch('/blog/api/auth.php?action=check', {
+        const res = await fetch('/blog_ref/api/auth.php?action=check', {
             credentials: 'same-origin'
         });
         const data = await res.json();
@@ -63,7 +63,7 @@ function renderLoginPrompt() {
             <div class="prompt-icon">🔐</div>
             <h3>登录后可评论</h3>
             <p>登录后解锁评论功能，与作者和其他读者互动</p>
-            <a href="/blog/pages/login.html?redirect=${encodeURIComponent(window.location.href)}" class="login-btn">去登录</a>
+            <a href="/blog_ref/pages/login.html?redirect=${encodeURIComponent(window.location.href)}" class="login-btn">去登录</a>
         </div>
     `;
 }
@@ -97,7 +97,7 @@ function renderPost(post) {
     if (post.category) {
         const categoryEl = document.getElementById('post-category');
         categoryEl.style.display = 'inline';
-        document.getElementById('category-link').href = `/blog/pages/archive.html?category=${post.category.slug}`;
+        document.getElementById('category-link').href = `/blog_ref/pages/archive.html?category=${post.category.slug}`;
         document.getElementById('category-link').textContent = post.category.name;
     }
 
@@ -116,7 +116,7 @@ function renderPost(post) {
     // 3D阅读模式入口
     const threeDEntry = document.getElementById('post-3d-entry');
     if (threeDEntry) {
-        threeDEntry.href = `/blog/pages/post3d.html?id=${post.id}`;
+        threeDEntry.href = `/blog_ref/pages/post3d.html?id=${post.id}`;
         threeDEntry.style.display = 'inline-flex';
     }
 
@@ -124,7 +124,7 @@ function renderPost(post) {
     const tagsContainer = document.getElementById('post-tags');
     if (post.tags && post.tags.length > 0) {
         tagsContainer.innerHTML = post.tags.map(tag =>
-            `<a href="/blog/pages/archive.html?tag=${tag.slug}" class="tag" style="--tag-color: ${tag.color || '#4dabf7'}">${tag.name}</a>`
+            `<a href="/blog_ref/pages/archive.html?tag=${tag.slug}" class="tag" style="--tag-color: ${tag.color || '#4dabf7'}">${tag.name}</a>`
         ).join('');
     }
 
@@ -140,14 +140,14 @@ function renderPost(post) {
     // 上一篇/下一篇
     if (post.prev) {
         const prevEl = document.getElementById('prev-post');
-        prevEl.href = `/blog/pages/post.html?id=${post.prev.id}`;
+        prevEl.href = `/blog_ref/pages/post.html?id=${post.prev.id}`;
         prevEl.querySelector('.nav-title').textContent = post.prev.title;
         prevEl.style.visibility = 'visible';
     }
 
     if (post.next) {
         const nextEl = document.getElementById('next-post');
-        nextEl.href = `/blog/pages/post.html?id=${post.next.id}`;
+        nextEl.href = `/blog_ref/pages/post.html?id=${post.next.id}`;
         nextEl.querySelector('.nav-title').textContent = post.next.title;
         nextEl.style.visibility = 'visible';
     }
@@ -229,7 +229,7 @@ async function submitComment(e) {
     submitBtn.textContent = '发表中...';
     
     try {
-        const response = await fetch('/blog/api/comments.php', {
+        const response = await fetch('/blog_ref/api/comments.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'same-origin',
@@ -264,7 +264,7 @@ function showError(message) {
             <div class="post-detail-header">
                 <h1 class="post-detail-title">哎呀，${message} (╯°□°)╯</h1>
                 <p style="text-align: center; color: var(--text-light); margin-top: 20px;">
-                    <a href="/blog/" style="color: var(--primary);">返回首页</a>
+                    <a href="/blog_ref/" style="color: var(--primary);">返回首页</a>
                 </p>
             </div>
         `;
