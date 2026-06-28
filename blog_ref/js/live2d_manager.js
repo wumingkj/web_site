@@ -15,7 +15,7 @@
 
     var baseCanvasW = 300;
     var baseCanvasH = 450;
-    var modelScale = 0.08;
+    var modelScale = 0.1;
     var modelOffsetX = 0;
     var modelOffsetY = 0;
 
@@ -116,7 +116,7 @@
         resetBtn.addEventListener('click', function () {
             modelOffsetX = 0;
             modelOffsetY = 0;
-            modelScale = 0.08;
+            modelScale = 0.1;
             applyModelPosition();
             applyModelScale();
             buildSettingsPanel();
