@@ -276,6 +276,15 @@
         }
     });
 
+    function isOnModel(ix, iy) {
+        if (!model) return false;
+        var bounds = model.getBounds();
+        var sx = ix * (view.offsetWidth / baseCanvasW);
+        var sy = iy * (view.offsetHeight / baseCanvasH);
+        return sx >= bounds.x && sx <= bounds.x + bounds.width &&
+               sy >= bounds.y && sy <= bounds.y + bounds.height;
+    }
+
     view.addEventListener('mouseup', function (e) {
         if (!model) { isClick = false; return; }
         if (isClick) {
@@ -285,7 +294,7 @@
                 startAnimation('touch_head', 'base');
             } else if (isHit('TouchSpecial', ix, iy)) {
                 startAnimation('touch_special', 'base');
-            } else {
+            } else if (isOnModel(ix, iy)) {
                 var bodyMotions = ['touch_body', 'main_1', 'main_2', 'main_3', 'mission', 'home', 'mail', 'login', 'complete'];
                 var found = null;
                 for (var i = 0; i < bodyMotions.length; i++) {
@@ -328,7 +337,7 @@
                 startAnimation('touch_head', 'base');
             } else if (isHit('TouchSpecial', ix, iy)) {
                 startAnimation('touch_special', 'base');
-            } else {
+            } else if (isOnModel(ix, iy)) {
                 var bodyMotions = ['touch_body', 'main_1', 'main_2', 'main_3', 'mission', 'home', 'mail', 'login', 'complete'];
                 var found = null;
                 for (var i = 0; i < bodyMotions.length; i++) {
