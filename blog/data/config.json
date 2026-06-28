@@ -1,0 +1,34 @@
+{
+    "effects": {
+        "starfield": true,
+        "floatingParticles": true,
+        "particleTrail": true,
+        "mouseChaser": {
+            "enabled": true,
+            "count": 3,
+            "speed": 1,
+            "catchRadius": 15,
+            "catchEffect": "burst",
+            "respawnDelay": 1000,
+            "types": ["star", "heart", "cat"],
+            "skills": {
+                "star": {
+                    "cd": 20000,
+                    "range": 75,
+                    "triggerMinDist": 150,
+                    "triggerMaxDist": 600,
+                    "castDelay": 100
+                },
+                "heart": {
+                    "cd": 30000,
+                    "duration": 10000,
+                    "multiplier": 2,
+                    "triggerDist": 200
+                },
+                "cat": {
+                    "passive": true
+                }
+            }
+        }
+    }
+}

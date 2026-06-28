@@ -1,0 +1,174 @@
+<div class="page-header scroll-reveal">
+    <h1>🔧 开发者工具箱</h1>
+    <p>实用小工具，效率提升利器</p>
+</div>
+
+<div class="tools-grid">
+
+    <div class="tool-card scroll-reveal" data-color="red">
+        <div class="tool-header">
+            <span class="tool-icon">🔐</span>
+            <h3>密码生成器</h3>
+        </div>
+        <div class="tool-body">
+            <div class="tool-row">
+                <label>长度</label>
+                <input type="range" id="pwd-length" min="4" max="64" value="16">
+                <span id="pwd-length-val" style="min-width:24px;text-align:center;font-weight:700;font-size:0.9em;">16</span>
+            </div>
+            <div class="tool-checks">
+                <label><input type="checkbox" id="pwd-upper" checked> 大写</label>
+                <label><input type="checkbox" id="pwd-lower" checked> 小写</label>
+                <label><input type="checkbox" id="pwd-numbers" checked> 数字</label>
+                <label><input type="checkbox" id="pwd-symbols" checked> 符号</label>
+            </div>
+            <div class="tool-output-wrap">
+                <input type="text" id="pwd-output" readonly placeholder="点击生成...">
+                <button class="t-btn" onclick="generatePassword()">生成</button>
+                <button class="tool-copy-btn" onclick="copyToClip('pwd-output')">复制</button>
+            </div>
+            <div class="pwd-strength-wrap">
+                <div class="pwd-strength"><div class="bar"></div></div>
+                <div class="pwd-strength-text" id="pwd-strength-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tool-card scroll-reveal" data-color="orange">
+        <div class="tool-header">
+            <span class="tool-icon">📋</span>
+            <h3>JSON 格式化</h3>
+        </div>
+        <div class="tool-body">
+            <textarea id="json-input" placeholder='粘贴 JSON 数据...'></textarea>
+            <div class="tool-actions">
+                <button onclick="formatJSON()">格式化</button>
+                <button onclick="minifyJSON()">压缩</button>
+            </div>
+            <textarea id="json-output" readonly placeholder="结果将显示在这里..."></textarea>
+            <button class="tool-copy-btn" onclick="copyToClip('json-output')">复制结果</button>
+        </div>
+    </div>
+
+    <div class="tool-card scroll-reveal" data-color="green">
+        <div class="tool-header">
+            <span class="tool-icon">⏰</span>
+            <h3>时间戳转换</h3>
+        </div>
+        <div class="tool-body">
+            <div class="current-time" id="current-time">加载中...</div>
+            <div class="tool-row">
+                <input type="number" id="ts-input" placeholder="输入时间戳...">
+                <button class="t-btn" onclick="tsToDate()">转换</button>
+            </div>
+            <div class="tool-output" id="ts-output">转换结果将显示在这里</div>
+            <div class="tool-row">
+                <input type="datetime-local" id="date-input">
+                <button class="t-btn" onclick="dateToTs()">转时间戳</button>
+            </div>
+            <div class="tool-output" id="date-output">时间戳将显示在这里</div>
+        </div>
+    </div>
+
+    <div class="tool-card scroll-reveal" data-color="blue">
+        <div class="tool-header">
+            <span class="tool-icon">🔄</span>
+            <h3>Base64 编解码</h3>
+        </div>
+        <div class="tool-body">
+            <textarea id="b64-input" placeholder="输入文本..."></textarea>
+            <div class="tool-actions">
+                <button onclick="encodeB64()">编码</button>
+                <button onclick="decodeB64()">解码</button>
+            </div>
+            <textarea id="b64-output" readonly placeholder="结果..."></textarea>
+            <button class="tool-copy-btn" onclick="copyToClip('b64-output')">复制</button>
+        </div>
+    </div>
+
+    <div class="tool-card scroll-reveal" data-color="purple">
+        <div class="tool-header">
+            <span class="tool-icon">🔗</span>
+            <h3>URL 编解码</h3>
+        </div>
+        <div class="tool-body">
+            <textarea id="url-input" placeholder="输入 URL 或编码字符串..."></textarea>
+            <div class="tool-actions">
+                <button onclick="encodeURI_()">编码</button>
+                <button onclick="decodeURI_()">解码</button>
+            </div>
+            <textarea id="url-output" readonly placeholder="结果..."></textarea>
+            <button class="tool-copy-btn" onclick="copyToClip('url-output')">复制</button>
+        </div>
+    </div>
+
+    <div class="tool-card scroll-reveal" data-color="pink">
+        <div class="tool-header">
+            <span class="tool-icon">#️⃣</span>
+            <h3>哈希生成</h3>
+        </div>
+        <div class="tool-body">
+            <textarea id="hash-input" placeholder="输入文本..." rows="2"></textarea>
+            <div class="tool-row">
+                <select id="hash-type">
+                    <option value="SHA-1">SHA-1</option>
+                    <option value="SHA-256" selected>SHA-256</option>
+                    <option value="SHA-512">SHA-512</option>
+                </select>
+                <button class="t-btn" onclick="genHash()">生成</button>
+            </div>
+            <div class="tool-output-wrap">
+                <input type="text" id="hash-output" readonly placeholder="哈希值...">
+                <button class="tool-copy-btn" onclick="copyToClip('hash-output')">复制</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tool-card scroll-reveal" data-color="yellow">
+        <div class="tool-header">
+            <span class="tool-icon">🆔</span>
+            <h3>UUID 生成器</h3>
+        </div>
+        <div class="tool-body">
+            <div class="tool-row">
+                <label>数量</label>
+                <input type="number" id="uuid-count" min="1" max="20" value="5">
+                <button class="t-btn" onclick="genUUIDs()">生成</button>
+            </div>
+            <div id="uuid-list" class="uuid-list"></div>
+            <button class="tool-copy-btn" onclick="copyAllUUIDs()">复制全部</button>
+        </div>
+    </div>
+
+    <div class="tool-card scroll-reveal" data-color="teal">
+        <div class="tool-header">
+            <span class="tool-icon">🎨</span>
+            <h3>颜色转换</h3>
+        </div>
+        <div class="tool-body">
+            <div class="color-preview-wrap">
+                <div class="color-preview" id="color-preview" style="background:#4dabf7"></div>
+                <input type="color" id="color-picker" value="#4dabf7" oninput="onColorPicker()">
+            </div>
+            <div class="color-inputs">
+                <div class="tool-row">
+                    <label>HEX</label>
+                    <input type="text" id="color-hex" value="#4dabf7" onchange="onColorHex()">
+                </div>
+                <div class="tool-row">
+                    <label>RGB</label>
+                    <input type="text" id="color-rgb" value="rgb(77, 171, 247)" onchange="onColorRgb()">
+                </div>
+                <div class="tool-row">
+                    <label>HSL</label>
+                    <input type="text" id="color-hsl" value="hsl(210, 92%, 64%)" onchange="onColorHsl()">
+                </div>
+            </div>
+            <button class="tool-copy-btn" onclick="copyToClip('color-hex')">复制 HEX</button>
+        </div>
+    </div>
+
+</div>
+
+<script>window._NO_EFFECTS = true;</script>
+<script src="/blog_ref/js/tools.js?v=3"></script>

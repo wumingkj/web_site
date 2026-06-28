@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章归档 | Wuming Blog</title>
+    <link rel="icon" href="/blog/assets/images/icon.ico">
+    <link rel="stylesheet" href="/blog/css/style.css?v=14">
+    <link rel="stylesheet" href="/blog/css/pages.css?v=10">
+    <link rel="stylesheet" href="/blog/css/toast.css?v=4">
+</head>
+<body>
+    <div class="bg-decoration">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="/blog/" class="logo">
+            <span>✨</span>
+            Wuming Blog
+        </a>
+        <div class="nav-links" id="nav-links">
+            <a href="/blog/">首页</a>
+            <a href="/blog/pages/archive.html" class="active">文章</a>
+            <a href="/blog/pages/tools.html">🔧 工具</a>
+            <a href="/blog/pages/about.html">关于</a>
+            <a href="/blog/pages/login.html">🔐</a>
+        </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- 移动端侧边栏 -->
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-avatar">💫</div>
+            <h3>Wuming Blog</h3>
+            <p>🌈 永远相信美好的事情即将发生</p>
+        </div>
+        <div class="sidebar-nav">
+            <a href="/blog/" class="sidebar-nav-item">
+                <span>🏠</span> 首页
+            </a>
+            <a href="/blog/pages/archive.html" class="sidebar-nav-item active">
+                <span>📜</span> 文章
+            </a>
+            <a href="/blog/pages/tools.html" class="sidebar-nav-item">
+                <span>🔧</span> 工具箱
+            </a>
+            <a href="/blog/pages/about.html" class="sidebar-nav-item">
+                <span>👋</span> 关于
+            </a>
+            <a href="/blog/pages/login.html" class="sidebar-nav-item">
+                <span>🔐</span> 登录
+            </a>
+        </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <main class="archive-container" id="page-content">
+        <div class="page-header">
+            <h1>📜 全部文章</h1>
+            <p>时间是最好的记录者</p>
+        </div>
+
+        <div class="filter-panel" id="filter-panel">
+            <!-- 排序方式筛选 -->
+            <div class="filter-section">
+                <span class="filter-label">📊 排序方式：</span>
+                <div class="filter-options" id="sort-options">
+                    <button class="filter-btn active" data-sort="created_at" data-order="DESC">
+                        <span class="sort-icon">📅</span> 发布时间
+                        <span class="sort-arrow">↓</span>
+                    </button>
+                    <button class="filter-btn" data-sort="views" data-order="DESC">
+                        <span class="sort-icon">🔥</span> 浏览量
+                        <span class="sort-arrow">↓</span>
+                    </button>
+                    <button class="filter-btn" data-sort="comments" data-order="DESC">
+                        <span class="sort-icon">💬</span> 评论数
+                        <span class="sort-arrow">↓</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 标签多选筛选 -->
+            <div class="filter-section">
+                <span class="filter-label">🏷️ 标签筛选（可多选）：</span>
+                <div class="filter-tags" id="filter-tags">
+                    <button class="filter-tag active" data-tag="">全部</button>
+                </div>
+            </div>
+
+            <!-- 分类筛选 -->
+            <div class="filter-section">
+                <span class="filter-label">📁 分类筛选：</span>
+                <div class="filter-tags" id="filter-categories">
+                    <button class="filter-tag active" data-category="">全部</button>
+                </div>
+            </div>
+
+            <!-- 筛选状态显示 -->
+            <div class="filter-status" id="filter-status">
+                <span class="status-text">显示全部文章</span>
+                <button class="clear-filter" id="clear-filter" style="display: none;">清除筛选</button>
+            </div>
+        </div>
+
+        <div class="archive-timeline" id="archive-timeline"></div>
+
+        <div class="archive-stats">
+            <p>共发表了 <strong id="total-posts">0</strong> 篇文章</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Powered by <span class="footer-heart">❤️</span> Wuming Blog © 2026</p>
+    </footer>
+
+    <script src="/blog/js/page-transition.js?v=4"></script>
+    <script src="/blog/js/common.js?v=23"></script>
+    <script src="/blog/js/toast.js?v=6"></script>
+    <script src="/blog/js/archive.js?v=14"></script>
+</body>
+</html>

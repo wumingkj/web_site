@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录/注册 - Wuming Blog</title>
+    <link rel="icon" href="/blog/assets/images/icon.ico">
+    <link rel="stylesheet" href="/blog/css/style.css?v=14">
+    <link rel="stylesheet" href="/blog/css/pages.css?v=12">
+    <link rel="stylesheet" href="/blog/css/toast.css?v=4">
+    <style>
+        .admin-hint { display: none; }
+        .login-container {
+            max-width: 420px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(77, 171, 247, 0.15);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header .avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: var(--gradient-rainbow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            border: 4px solid white;
+            box-shadow: 0 10px 30px rgba(77, 171, 247, 0.3);
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            color: #1a202c;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        .login-tabs {
+            display: flex;
+            background: rgba(77, 171, 247, 0.1);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 30px;
+        }
+
+        .login-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #2d3748;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(77, 171, 247, 0.3);
+        }
+        
+        .login-form {
+            display: none;
+        }
+        
+        .login-form.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid rgba(77, 171, 247, 0.2);
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #fff;
+            color: #1a202c;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(77, 171, 247, 0.1);
+        }
+        
+        .form-group input::placeholder {
+            color: #999;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(77, 171, 247, 0.3);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .login-btn.register {
+            background: var(--gradient-rainbow);
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px dashed rgba(77, 171, 247, 0.3);
+        }
+        
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            background: rgba(255, 107, 107, 0.1);
+            color: #e74c3c;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .success-message {
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .admin-hint {
+            background: rgba(255, 234, 167, 0.2);
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #b8860b;
+            margin-bottom: 20px;
+        }
+        
+        .admin-hint strong {
+            color: #b8860b;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 40px auto;
+            }
+            
+            .login-card {
+                padding: 30px 25px;
+            }
+            
+            .login-header .avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+            }
+            
+            .login-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/blog/" class="logo">✨ Wuming Blog</a>
+            <div class="nav-links">
+                <a href="/blog/">首页</a>
+                <a href="/blog/pages/archive.html">文章</a>
+                <a href="/blog/pages/about.html">关于</a>
+            </div>
+            <button class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- 移动端侧边栏 -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-avatar">💫</div>
+            <h3>Wuming Blog</h3>
+            <p>🌈 永远相信美好的事情即将发生</p>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/blog/" class="sidebar-nav-item">🏠 首页</a>
+            <a href="/blog/pages/archive.html" class="sidebar-nav-item">📜 文章</a>
+            <a href="/blog/pages/about.html" class="sidebar-nav-item">👋 关于</a>
+        </nav>
+    </div>
+    
+    <!-- 登录卡片 -->
+    <main class="login-container" id="page-content">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="avatar">🔐</div>
+                <h1>欢迎回来</h1>
+                <p>登录后可以发表评论和管理博客</p>
+            </div>
+            
+            <div class="error-message" id="errorMsg"></div>
+            <div class="success-message" id="successMsg"></div>
+            
+            <div class="login-tabs">
+                <div class="login-tab active" data-tab="login">登录</div>
+                <div class="login-tab" data-tab="register">注册</div>
+            </div>
+            
+            <!-- 登录表单 -->
+            <form class="login-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">用户名</label>
+                    <input type="text" id="loginUsername" name="username" placeholder="请输入用户名" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">密码</label>
+                    <input type="password" id="loginPassword" name="password" placeholder="请输入密码" required>
+                </div>
+                <button type="submit" class="login-btn" id="loginBtn">登录</button>
+            </form>
+            
+            <!-- 注册表单 -->
+            <form class="login-form" id="registerForm">
+                <div class="form-group">
+                    <label for="regUsername">用户名 *</label>
+                    <input type="text" id="regUsername" name="username" placeholder="请输入用户名" required minlength="2" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">邮箱（可选）</label>
+                    <input type="email" id="regEmail" name="email" placeholder="选填，用于找回密码">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">密码 *</label>
+                    <input type="password" id="regPassword" name="password" placeholder="请输入密码（至少6位）" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword2">确认密码 *</label>
+                    <input type="password" id="regPassword2" name="password2" placeholder="请再次输入密码" required>
+                </div>
+                <button type="submit" class="login-btn register" id="registerBtn">注册</button>
+            </form>
+            
+            <div class="login-footer">
+                <a href="/blog/">← 返回首页</a>
+            </div>
+        </div>
+    </main>
+    
+    <script src="/blog/js/page-transition.js?v=4"></script>
+    <script src="/blog/js/common.js?v=23"></script>
+    <script src="/blog/js/toast.js?v=6"></script>
+    <script src="/blog/js/login.js?v=1"></script>
+    <script>
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initLoginPage);
+        } else {
+            initLoginPage();
+        }
+    </script>
+</body>
+</html>

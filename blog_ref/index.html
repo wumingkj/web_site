@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wuming Blog ✨ 无名小破站</title>
+    <link rel="icon" href="/blog/assets/images/icon.ico">
+    <link rel="stylesheet" href="/blog_ref/css/global.css?v=1">
+    <link rel="stylesheet" href="/blog_ref/css/home.css?v=10">
+    <link rel="stylesheet" href="/blog_ref/css/pages.css?v=10">
+    <link rel="stylesheet" href="/blog_ref/css/tools.css?v=10">
+    <link rel="stylesheet" href="/blog_ref/css/admin.css?v=10">
+    <link rel="stylesheet" href="/blog_ref/css/toast.css?v=7">
+    <link rel="stylesheet" href="/blog_ref/css/effects.css?v=6">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+</head>
+<body>
+
+<!-- ==================== 全局层（永远存活，在 #app 外面） ==================== -->
+
+<!-- 背景装饰 -->
+<div class="bg-decoration">
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+</div>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+    <a href="/blog/" class="logo">
+        <span>✨</span>
+        Wuming Blog
+    </a>
+    <div class="nav-links" id="nav-links">
+        <a href="/blog/">首页</a>
+        <a href="/blog/pages/archive.html">文章</a>
+        <a href="/blog/pages/tools.html">🔧 工具</a>
+        <a href="/blog/pages/about.html">关于</a>
+        <a href="/blog/pages/login.html" class="login-link">🔐</a>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- 移动端侧边栏 -->
+<div class="mobile-sidebar" id="mobile-sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-avatar">💫</div>
+        <h3>Wuming Blog</h3>
+        <p>🌈 永远相信美好的事情即将发生</p>
+    </div>
+    <div class="sidebar-nav">
+        <a href="/blog/" class="sidebar-nav-item active">
+            <span>🏠</span> 首页
+        </a>
+        <a href="/blog/pages/archive.html" class="sidebar-nav-item">
+            <span>📜</span> 文章
+        </a>
+        <a href="/blog/pages/tools.html" class="sidebar-nav-item">
+            <span>🔧</span> 工具箱
+        </a>
+        <a href="/blog/pages/about.html" class="sidebar-nav-item">
+            <span>👋</span> 关于
+        </a>
+        <a href="/blog/pages/login.html" class="sidebar-nav-item">
+            <span>🔐</span> 登录
+        </a>
+    </div>
+    <div class="sidebar-stats">
+        <div class="sidebar-stat">
+            <strong id="mobile-stat-posts">0</strong>
+            <span>文章</span>
+        </div>
+        <div class="sidebar-stat">
+            <strong id="mobile-stat-views">0</strong>
+            <span>阅读</span>
+        </div>
+        <div class="sidebar-stat">
+            <strong id="mobile-stat-comments">0</strong>
+            <span>评论</span>
+        </div>
+    </div>
+</div>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- 音乐播放器 FAB -->
+<div class="music-player" id="music-player">
+    <div class="music-player-header">
+        <span class="music-player-icon">🎵</span>
+        <span class="music-player-title">Playlist</span>
+        <button class="music-player-lrc-toggle" id="music-player-lrc-toggle" title="切换歌词样式">🎤</button>
+        <button class="music-player-close" id="music-player-close">✕</button>
+    </div>
+    <div class="custom-volume" id="custom-volume">
+        <button class="custom-volume-mute" id="custom-volume-mute" title="静音">🔊</button>
+        <div class="custom-volume-track" id="custom-volume-track">
+            <div class="custom-volume-fill" id="custom-volume-fill"></div>
+            <div class="custom-volume-thumb" id="custom-volume-thumb"></div>
+        </div>
+        <span class="custom-volume-val" id="custom-volume-val">70</span>
+    </div>
+    <div class="music-player-body" id="music-player-body"></div>
+</div>
+<button class="music-player-fab" id="music-player-fab" title="音乐播放器">
+    <span class="music-fab-icon">🎵</span>
+    <span class="music-fab-wave"></span>
+</button>
+
+<!-- 歌词悬浮窗 -->
+<div class="lrc-float" id="lrc-float">
+    <div class="lrc-float-top" id="lrc-float-top"></div>
+    <div class="lrc-float-bot" id="lrc-float-bot">♪ 暂未播放</div>
+</div>
+
+<!-- Live2D 看板娘 -->
+<script src="/blog/live2d/live2d_3/js/pixi.min.js"></script>
+<script src="/blog/live2d/live2d_3/js/live2dcubismcore.min.js"></script>
+<script src="/blog/live2d/live2d_3/js/live2dcubismframework.js"></script>
+<script src="/blog/live2d/live2d_3/js/live2dcubismpixi.js"></script>
+<script src="/blog/live2d/live2d_3/js/charData.js"></script>
+<script src="/blog/live2d/live2d_3/js/l2d.js"></script>
+<script src="/blog_ref/js/kanban.js"></script>
+
+<!-- ==================== 页面内容层（可切换） ==================== -->
+<main class="home-container" id="app">
+    <!-- 首页内容：由 fragments/home.html 首次加载，或 router 加载 -->
+    <section class="hero-section scroll-reveal">
+        <div class="hero-content">
+            <div class="hero-avatar">💫</div>
+            <h1 class="hero-title"><span class="typing-text" data-typing-delay="1200" data-typing-speed="150">Wuming Blog</span></h1>
+            <p class="hero-subtitle">🌈 永远相信美好的事情即将发生</p>
+            <p class="hero-desc">
+                记录生活，分享技术<br>
+                一个热爱嵌入式开发的程序员的小天地
+            </p>
+            <div class="hero-buttons">
+                <a href="/blog/pages/archive.html" class="btn btn-primary">📖 浏览文章</a>
+                <a href="/blog/pages/about.html" class="btn btn-secondary">👋 关于我</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-stats scroll-reveal scroll-delay-1">
+        <div class="stats-card neon-border">
+            <div class="stat-item">
+                <div class="stat-icon">📝</div>
+                <div class="stat-number" id="stat-posts">0</div>
+                <div class="stat-label">篇文章</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">📁</div>
+                <div class="stat-number" id="stat-categories">0</div>
+                <div class="stat-label">个分类</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">💬</div>
+                <div class="stat-number" id="stat-comments">0</div>
+                <div class="stat-label">条评论</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">👁️</div>
+                <div class="stat-number" id="stat-views">0</div>
+                <div class="stat-label">次阅读</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="nav-cards">
+        <a href="/blog/pages/archive.html" class="nav-card scroll-reveal scroll-delay-1">
+            <div class="card-icon">📜</div>
+            <h3>文章</h3>
+            <p>浏览所有文章内容</p>
+        </a>
+        <a href="/blog/pages/tools.html" class="nav-card scroll-reveal scroll-delay-2">
+            <div class="card-icon">🔧</div>
+            <h3>工具箱</h3>
+            <p>实用开发小工具</p>
+        </a>
+        <a href="/blog/pages/about.html" class="nav-card scroll-reveal scroll-delay-3">
+            <div class="card-icon">👋</div>
+            <h3>关于</h3>
+            <p>了解更多关于我</p>
+        </a>
+    </section>
+
+    <section class="quick-links scroll-reveal">
+        <div class="section-header"><h2>🏷️ 标签云</h2></div>
+        <div class="tag-cloud" id="tags-container"></div>
+    </section>
+
+    <section class="quick-links scroll-reveal" style="margin-top: 20px;">
+        <div class="section-header"><h2>📁 分类</h2></div>
+        <div class="tag-cloud" id="categories-container"></div>
+    </section>
+
+    <section class="announcement-section scroll-reveal">
+        <div class="section-header"><h2>📢 公告</h2></div>
+        <div class="announcement-grid" id="announcement-list">
+            <div class="announcement-empty">加载中...</div>
+        </div>
+    </section>
+</main>
+
+<!-- 页脚 -->
+<footer class="footer">
+    <p>Powered by <span class="footer-heart">❤️</span> Wuming Blog © 2026</p>
+</footer>
+
+<!-- ==================== 全局脚本 ==================== -->
+<script src="/blog_ref/js/router.js?v=1"></script>
+<script src="/blog_ref/js/global.js?v=1"></script>
+<script src="/blog_ref/js/toast.js?v=10"></script>
+<script src="/blog_ref/js/effects.js?v=8"></script>
+<script src="/blog_ref/js/home.js?v=14"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+</body>
+</html>

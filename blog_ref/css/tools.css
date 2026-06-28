@@ -1,0 +1,468 @@
+/* Wuming Blog - 工具箱页面样式 */
+
+/* 基础重置 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --primary: #4dabf7;
+    --primary-light: #74c0fc;
+    --text: #4a5568;
+    --text-light: #718096;
+    --text-dark: #2d3748;
+    --glass: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.9);
+    --bg-card: rgba(255, 255, 255, 0.7);
+    --rainbow-1: #ff6b6b;
+    --rainbow-2: #ffa94d;
+    --rainbow-3: #ffd43b;
+    --rainbow-4: #69db7c;
+    --rainbow-5: #4dabf7;
+    --rainbow-6: #9775fa;
+    --rainbow-7: #da77f2;
+}
+
+body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.tools-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* ===== Tool Card ===== */
+.tool-card {
+    background: var(--bg-card, rgba(255, 255, 255, 0.7));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.tool-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tool-icon {
+    font-size: 1.3em;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--tc, #4dabf7), var(--tc-light, rgba(77,171,247,0.3)));
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.tool-header h3 {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-dark, #333);
+}
+
+.tool-body {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ===== Tool Row (input + button) ===== */
+.tool-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tool-row label {
+    font-size: 0.85em;
+    color: var(--text-light, #888);
+    white-space: nowrap;
+    min-width: 32px;
+    font-weight: 500;
+}
+
+.tool-row input[type="text"],
+.tool-row input[type="number"],
+.tool-row select {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    font-size: 0.88em;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-dark, #333);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.tool-row input:focus,
+.tool-body textarea:focus,
+.tool-row select:focus {
+    border-color: var(--tc, #4dabf7);
+    box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.1);
+}
+
+/* ===== Tool Buttons ===== */
+.tool-body button,
+.tool-actions button,
+.tool-copy-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.tool-actions button,
+.tool-body button.t-btn {
+    background: linear-gradient(135deg, var(--tc, #4dabf7), var(--tc-dark, #339af0));
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.tool-actions button:hover,
+.tool-body button.t-btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tool-actions button:active,
+.tool-body button.t-btn:active {
+    transform: translateY(0);
+}
+
+.tool-copy-btn {
+    align-self: flex-end;
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--text-light, #888);
+    padding: 6px 14px;
+}
+
+.tool-copy-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--text-dark, #333);
+}
+
+.tool-copy-btn.copied {
+    background: #69db7c;
+    color: #fff;
+}
+
+/* ===== Button Group ===== */
+.tool-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ===== Textarea ===== */
+.tool-body textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px 14px;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-dark, #333);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    line-height: 1.5;
+}
+
+/* ===== Tool Output ===== */
+.tool-output-wrap {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.tool-output-wrap input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    font-size: 0.88em;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.02);
+    color: var(--text-dark, #333);
+    outline: none;
+}
+
+.tool-output {
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 10px;
+    font-size: 0.85em;
+    color: var(--text-light, #888);
+    min-height: 36px;
+    word-break: break-all;
+    line-height: 1.6;
+}
+
+.tool-output strong {
+    color: var(--text-dark, #333);
+}
+
+/* ===== Password Strength ===== */
+.pwd-strength-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pwd-strength {
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.pwd-strength .bar {
+    height: 100%;
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.4s ease, background 0.4s ease;
+}
+
+.pwd-strength-text {
+    font-size: 0.75em;
+    text-align: right;
+    color: var(--text-light, #888);
+    transition: color 0.3s;
+}
+
+/* ===== Checkboxes ===== */
+.tool-checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+}
+
+.tool-checks label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85em;
+    cursor: pointer;
+    color: var(--text-light, #888);
+    user-select: none;
+}
+
+.tool-checks input[type="checkbox"] {
+    accent-color: var(--tc, #4dabf7);
+    width: 15px;
+    height: 15px;
+}
+
+/* ===== Range Slider ===== */
+input[type="range"] {
+    flex: 1;
+    accent-color: var(--tc, #4dabf7);
+    height: 6px;
+}
+
+/* ===== Current Time Display ===== */
+.current-time {
+    padding: 10px 14px;
+    background: linear-gradient(135deg, rgba(77, 171, 247, 0.06), rgba(151, 117, 250, 0.06));
+    border-radius: 10px;
+    font-size: 0.85em;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    text-align: center;
+    color: var(--text-dark, #333);
+    line-height: 1.6;
+}
+
+.current-time small {
+    color: var(--text-light, #888);
+    font-size: 0.9em;
+}
+
+/* ===== UUID List ===== */
+.uuid-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.uuid-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    background: rgba(0, 0, 0, 0.025);
+    border-radius: 8px;
+    font-size: 0.84em;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+.uuid-item span {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-dark, #333);
+}
+
+.uuid-item button {
+    padding: 4px 10px;
+    font-size: 0.8em;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-light, #888);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.uuid-item button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-dark, #333);
+}
+
+/* ===== Color Converter ===== */
+.color-preview-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.color-preview {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(0,0,0,0.05);
+    transition: background 0.25s ease;
+    flex-shrink: 0;
+}
+
+.color-preview-wrap input[type="color"] {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    overflow: hidden;
+}
+
+.color-preview-wrap input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 2px;
+}
+
+.color-preview-wrap input[type="color"]::-webkit-color-swatch {
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.color-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.color-inputs .tool-row input {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+/* ===== Card Accent Colors ===== */
+.tool-card[data-color="red"]    { --tc: #ff6b6b; --tc-light: rgba(255,107,107,0.3); --tc-dark: #e03131; }
+.tool-card[data-color="orange"] { --tc: #ffa94d; --tc-light: rgba(255,169,77,0.3);  --tc-dark: #e8590c; }
+.tool-card[data-color="green"]  { --tc: #69db7c; --tc-light: rgba(105,219,124,0.3); --tc-dark: #2f9e44; }
+.tool-card[data-color="blue"]   { --tc: #4dabf7; --tc-light: rgba(77,171,247,0.3);  --tc-dark: #1971c2; }
+.tool-card[data-color="purple"] { --tc: #9775fa; --tc-light: rgba(151,117,250,0.3); --tc-dark: #7048e8; }
+.tool-card[data-color="pink"]   { --tc: #da77f2; --tc-light: rgba(218,119,242,0.3); --tc-dark: #be4bdb; }
+.tool-card[data-color="yellow"] { --tc: #ffd43b; --tc-light: rgba(255,212,59,0.3);  --tc-dark: #f08c00; }
+.tool-card[data-color="teal"]   { --tc: #38d9a9; --tc-light: rgba(56,217,169,0.3);  --tc-dark: #0ca678; }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .tools-container {
+        padding: 16px;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .tool-checks {
+        gap: 4px 10px;
+    }
+
+    .tool-actions {
+        flex-direction: row;
+    }
+
+    .tool-header h3 {
+        font-size: 0.95em;
+    }
+
+    .tool-body textarea {
+        min-height: 70px;
+        font-size: 0.82em;
+    }
+}
+
+@media (max-width: 480px) {
+    .tool-row {
+        flex-wrap: wrap;
+    }
+
+    .tool-row label {
+        min-width: 100%;
+    }
+
+    .tool-body {
+        padding: 14px 16px;
+    }
+
+    .tool-actions {
+        flex-direction: column;
+    }
+
+    .tool-actions button {
+        width: 100%;
+    }
+}

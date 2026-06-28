@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - Wuming Blog</title>
+    <link rel="icon" href="/blog/assets/images/icon.ico">
+    <link rel="stylesheet" href="/blog/css/style.css?v=14">
+    <link rel="stylesheet" href="/blog/css/pages.css?v=12">
+    <link rel="stylesheet" href="/blog/css/admin.css?v=13">
+    <link rel="stylesheet" href="/blog/css/toast.css?v=4">
+</head>
+<body class="admin-page">
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/blog/" class="logo">✨ Wuming Blog</a>
+            <div class="nav-links">
+                <a href="/blog/">首页</a>
+                <a href="/blog/pages/archive.html">文章</a>
+                <a href="/blog/pages/about.html">关于</a>
+            </div>
+            <div class="nav-right">
+                <span class="user-info" id="userInfo"></span>
+                <button class="logout-btn" id="logoutBtn" style="display:none;">退出</button>
+            </div>
+            <button class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- 移动端侧边栏 -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <a href="/blog/pages/profile.html" class="sidebar-avatar" id="sidebarAvatar">👨‍💼</a>
+            <h3><a href="/blog/pages/profile.html" id="sidebarName">管理员</a></h3>
+            <p id="sidebarRole">管理员</p>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-nav-item active" data-section="posts">📝 文章管理</a>
+            <a href="#" class="sidebar-nav-item" data-section="comments">💬 评论管理</a>
+            <a href="#" class="sidebar-nav-item" data-section="stats">📊 统计信息</a>
+            <a href="#" class="sidebar-nav-item" data-section="settings">⚙️ 系统设置</a>
+        </nav>
+        <div class="sidebar-logout">
+            <button class="sidebar-logout-btn" id="sidebarLogout">退出登录</button>
+        </div>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <main class="admin-container" id="page-content">
+        <div class="admin-sidebar">
+            <div class="admin-user">
+                <a href="/blog/pages/profile.html" class="admin-avatar-link" id="adminAvatar">👨‍💼</a>
+                <a href="/blog/pages/profile.html" class="admin-name" id="adminName">加载中...</a>
+                <div class="admin-role" id="adminRole">管理员</div>
+            </div>
+            <nav class="admin-nav">
+                <a href="#" class="admin-nav-item active" data-section="posts">
+                    <span class="icon">📝</span>
+                    <span>文章管理</span>
+                </a>
+                <a href="#" class="admin-nav-item" data-section="comments">
+                    <span class="icon">💬</span>
+                    <span>评论管理</span>
+                </a>
+                <a href="#" class="admin-nav-item" data-section="stats">
+                    <span class="icon">📊</span>
+                    <span>统计信息</span>
+                </a>
+                <a href="#" class="admin-nav-item" data-section="settings">
+                    <span class="icon">⚙️</span>
+                    <span>系统设置</span>
+                </a>
+            </nav>
+        </div>
+        
+        <div class="admin-content">
+            <!-- 文章管理 -->
+            <section class="admin-section active" id="postsSection">
+                <div class="section-header">
+                    <h2>📝 文章管理</h2>
+                    <div class="section-actions">
+                        <div class="status-filter">
+                            <button class="filter-btn active" data-status="all">全部</button>
+                            <button class="filter-btn" data-status="published">已发布</button>
+                            <button class="filter-btn" data-status="draft">草稿</button>
+                        </div>
+                        <button class="btn-primary" id="newPostBtn">+ 新建文章</button>
+                    </div>
+                </div>
+                <div class="posts-list" id="postsList">加载中...</div>
+            </section>
+            
+            <!-- 评论管理 -->
+            <section class="admin-section" id="commentsSection">
+                <div class="section-header">
+                    <h2>💬 评论管理</h2>
+                </div>
+                <div class="comments-list" id="commentsList">加载中...</div>
+            </section>
+            
+            <!-- 统计信息 -->
+            <section class="admin-section" id="statsSection">
+                <div class="section-header">
+                    <h2>📊 统计信息</h2>
+                </div>
+                <div class="stats-grid" id="statsGrid">加载中...</div>
+            </section>
+            
+            <!-- 系统设置 -->
+            <section class="admin-section" id="settingsSection">
+                <div class="section-header">
+                    <h2>⚙️ 系统设置</h2>
+                </div>
+                <div class="settings-form" id="settingsForm">
+                    <div class="setting-group">
+                        <label>修改密码</label>
+                        <input type="password" id="oldPassword" placeholder="当前密码">
+                        <input type="password" id="newPassword" placeholder="新密码">
+                        <input type="password" id="confirmPassword" placeholder="确认新密码">
+                        <button class="btn-secondary" id="changePwdBtn">修改密码</button>
+                    </div>
+                    <div class="setting-group">
+                        <label>数据管理</label>
+                        <button class="btn-secondary" id="backupBtn">备份数据</button>
+                        <button class="btn-danger" id="clearCacheBtn">清除缓存</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- 文章编辑弹窗 -->
+    <div class="modal-overlay" id="postModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">新建文章</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="postId">
+                <div class="form-group">
+                    <label>标题</label>
+                    <input type="text" id="postTitle" placeholder="请输入文章标题">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>分类</label>
+                        <div id="categoryOptions" class="radio-group">加载中...</div>
+                        <input type="hidden" id="postCategoryId">
+                    </div>
+                    <div class="form-group">
+                        <label>标签</label>
+                        <div id="tagOptions" class="checkbox-group">加载中...</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>摘要</label>
+                    <textarea id="postExcerpt" rows="2" placeholder="请输入摘要"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>内容（支持Markdown格式）</label>
+                    <textarea id="postContent" rows="15" placeholder="请输入文章内容..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>状态</label>
+                        <select id="postStatus">
+                            <option value="published">已发布</option>
+                            <option value="draft">草稿</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modalCancel">取消</button>
+                <button class="btn-primary" id="modalSave">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/blog/js/page-transition.js?v=4"></script>
+    <script src="/blog/js/common.js?v=23"></script>
+    <script src="/blog/js/toast.js?v=6"></script>
+    <script src="/blog/js/admin.js?v=15"></script>
+</body>
+</html>

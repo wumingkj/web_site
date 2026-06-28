@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "announcements": [
+        {
+            "id": 1,
+            "title": "欢迎来到无名博客",
+            "content": "## 欢迎来到我的博客\n![风景图](/assets/images/月见八千代.webp =150x150)\n```本人二次元宅，推荐一部番\n[《超时空辉夜姬》](https://www.acgbibi.com/search/-------------.html?wd=超时空辉夜姬)```\n---\n谢谢访问！",
+            "type": "info",
+            "icon": "🎉",
+            "position": "side",
+            "active": true,
+            "closable": true,
+            "duration": 10,
+            "sort_order": 0
+        },
+        {
+            "id": 2,
+            "title": "3D文章功能上线",
+            "content": "3D文章阅读体验功能，点击文章的\"3D\"\n![3D入口1](/assets/images/3D_show_1.png)\n或者在文章详细页面点击\"3D 沉浸阅读\"\n![3D入口2](/assets/images/3D_show_2.png)\n即可进入3D阅读模式，",
+            "type": "success",
+            "icon": "✨",
+            "position": "side",
+            "active": true,
+            "closable": false,
+            "duration": 10,
+            "sort_order": 1
+        }
+    ]
+}

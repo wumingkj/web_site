@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D 文章 | Wuming Blog</title>
+    <link rel="icon" href="/blog/assets/images/icon.ico">
+    <link rel="stylesheet" href="/blog/css/post3d.css?v=4">
+</head>
+<body>
+    <!-- 加载屏幕 -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">正在构建 3D 空间...</div>
+    </div>
+
+    <!-- 3D 画布 -->
+    <div id="three-container">
+        <canvas id="three-canvas"></canvas>
+    </div>
+
+    <!-- 点击开始覆盖层 -->
+    <div id="start-overlay" class="start-overlay hidden">
+        <div class="start-content">
+            <div class="start-icon">🎮</div>
+            <h2>3D 沉浸式阅读</h2>
+            <p class="start-desc" id="start-title">点击屏幕开始探索</p>
+            <div class="controls-hint">
+                <div class="key-hint"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 移动</div>
+                <div class="key-hint"><kbd>鼠标</kbd> 视角</div>
+                <div class="key-hint"><kbd>空格</kbd> 跳跃</div>
+                <div class="key-hint"><kbd>Shift</kbd> 加速</div>
+                <div class="key-hint"><kbd>鼠标点击</kbd> 打开/关闭阅读</div>
+                <div class="key-hint"><kbd>ESC</kbd> 暂停</div>
+            </div>
+            <button class="start-btn" id="start-btn">点击进入</button>
+        </div>
+    </div>
+
+    <!-- 十字准星 -->
+    <div id="crosshair" class="crosshair hidden">
+        <div class="cross-line cross-h"></div>
+        <div class="cross-line cross-v"></div>
+        <div class="cross-dot"></div>
+    </div>
+
+    <!-- 内容面板 -->
+    <div id="content-panel" class="content-panel hidden">
+        <div class="panel-header">
+            <span class="panel-chapter" id="panel-chapter"></span>
+            <h2 class="panel-title" id="panel-title"></h2>
+            <button class="panel-close" id="panel-close">✕</button>
+        </div>
+        <div class="panel-body" id="panel-body"></div>
+    </div>
+
+    <!-- 悬浮文字覆盖层 -->
+    <div id="float-text" class="float-text hidden">
+        <div class="float-text-header">
+            <span class="float-text-title" id="float-title"></span>
+            <span class="float-text-progress" id="float-progress"></span>
+        </div>
+        <div class="float-text-body" id="float-body"></div>
+    </div>
+
+    <!-- HUD -->
+    <div id="hud" class="hud hidden">
+        <div class="hud-chapter" id="hud-chapter"></div>
+        <div class="hud-hint" id="hud-hint">走近发光展板阅读内容</div>
+    </div>
+
+    <!-- 小地图 -->
+    <canvas id="minimap" class="minimap hidden" width="160" height="120"></canvas>
+
+    <!-- FPS 计数器 -->
+    <div id="fps-counter" class="fps-counter hidden">60 FPS</div>
+
+    <!-- 简化导航栏 -->
+    <nav class="nav-3d">
+        <a href="/blog/" class="nav-logo">✨ Wuming Blog</a>
+        <div class="nav-links">
+            <a href="/blog/">首页</a>
+            <a href="/blog/pages/archive.html">文章</a>
+            <a href="/blog/pages/tools.html">🔧 工具</a>
+            <a href="/blog/pages/about.html">关于</a>
+        </div>
+        <button class="nav-mode" id="nav-mode-btn" title="切换普通模式">📖 普通模式</button>
+    </nav>
+
+    <script>window._NO_EFFECTS = true; window._NO_CHASER = true;</script>
+    <script src="/blog/js/marked.min.js"></script>
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "/blog/js/three.module.js"
+        }
+    }
+    </script>
+    <script type="module" src="/blog/js/post3d.js?v=12"></script>
+</body>
+</html>

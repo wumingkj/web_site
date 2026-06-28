@@ -1,0 +1,573 @@
+/**
+ * 二次元粒子 + 全息投影风格
+ */
+
+/* ============ 星空背景 ============ */
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    background: transparent;
+    overflow: hidden;
+}
+
+/* 闪烁星星 */
+.star {
+    position: absolute;
+    background: radial-gradient(circle, rgba(77, 171, 247, 0.9), rgba(151, 117, 250, 0.7));
+    border-radius: 50%;
+    animation: twinkle var(--duration, 3s) ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(77, 171, 247, 0.6);
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: var(--min-opacity, 0.3); transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* ============ 飘落粒子（二次元风格） ============ */
+.floating-particle {
+    position: absolute;
+    pointer-events: none;
+    animation: float-down var(--float-duration, 10s) linear infinite;
+    opacity: 0;
+}
+
+/* 樱花形状 */
+.floating-particle.sakura {
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #ffb7c5 0%, #ff69b4 100%);
+    border-radius: 50% 0 50% 50%;
+    transform: rotate(45deg);
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+}
+
+/* 星星形状 */
+.floating-particle.star-particle {
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #ffd43b 0%, #ff922b 100%);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    box-shadow: 0 0 8px rgba(255, 212, 59, 0.6);
+}
+
+/* 圆形粒子 */
+.floating-particle.circle {
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #4dabf7, #9775fa);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(77, 171, 247, 0.8);
+}
+
+/* 菱形粒子 */
+.floating-particle.diamond {
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #9775fa 0%, #f783ac 100%);
+    transform: rotate(45deg);
+    box-shadow: 0 0 8px rgba(151, 117, 250, 0.6);
+}
+
+@keyframes float-down {
+    0% {
+        transform: translateY(-20px) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+        transform: translateY(50px) rotate(20deg) scale(1);
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* ============ 粒子拖尾（鼠标跟随） ============ */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* ============ 全息投影风格 ============ */
+
+/* 全息边框 - 应用于卡片 */
+.holo-border {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(90deg, #00ffff, #ff00ff, #00ffff) border-box;
+    animation: holo-border-shift 3s linear infinite;
+}
+
+@keyframes holo-border-shift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+/* 全息扫描线 */
+.holo-scanline::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.8), transparent);
+    animation: scanline 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes scanline {
+    0% { top: 0; opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { top: 100%; opacity: 1; }
+}
+
+/* 全息故障效果 */
+.holo-glitch {
+    animation: glitch 0.3s ease-in-out infinite;
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-1px, 1px); }
+    40% { transform: translate(1px, -1px); }
+    60% { transform: translate(-1px, -1px); }
+    80% { transform: translate(1px, 1px); }
+}
+
+/* 全息投影光晕 */
+.holo-glow {
+    box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.3),
+        0 0 40px rgba(255, 0, 255, 0.2),
+        0 0 60px rgba(0, 255, 255, 0.1);
+}
+
+/* ============ 特殊卡片效果 ============ */
+.post-card,
+.stat-card,
+.announcement-item,
+.profile-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.post-card::before,
+.stat-card::before,
+.announcement-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+    pointer-events: none;
+}
+
+.post-card:hover::before,
+.stat-card:hover::before,
+.announcement-item:hover::before {
+    left: 100%;
+}
+
+/* ============ 深色模式适配 ============ */
+[data-theme="dark"] #starfield,
+.dark-mode #starfield {
+    background: linear-gradient(to bottom, rgba(10, 10, 26, 0.98) 0%, rgba(26, 26, 58, 0.98) 100%);
+}
+
+[data-theme="dark"] .star,
+.dark-mode .star {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(200, 200, 255, 0.7));
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .floating-particle,
+.dark-mode .floating-particle {
+    opacity: 0.9;
+}
+
+/* ============ 打字机效果 ============ */
+.typing-text {
+    display: inline-block;
+    border-right: 3px solid var(--primary, #4dabf7);
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing-blink-caret 0.75s step-end infinite;
+    vertical-align: bottom;
+}
+
+@keyframes typing-blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary, #4dabf7); }
+}
+
+/* ============ 滚动滑入动画 ============ */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 左侧滑入 */
+.scroll-reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.scroll-reveal-left.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 右侧滑入 */
+.scroll-reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.scroll-reveal-right.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 缩放滑入 */
+.scroll-reveal-scale {
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal-scale.revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 延迟类 */
+.scroll-delay-1 { transition-delay: 0.1s; }
+.scroll-delay-2 { transition-delay: 0.2s; }
+.scroll-delay-3 { transition-delay: 0.3s; }
+.scroll-delay-4 { transition-delay: 0.4s; }
+
+/* ============ 霓虹流动边框 ============ */
+.neon-border {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(var(--card-bg, #fff), var(--card-bg, #fff)) padding-box,
+                linear-gradient(45deg, #ff6b6b, #ffa94d, #ffd43b, #69db7c, #4dabf7, #9775fa, #ff6b6b) border-box;
+    background-size: 100% 100%, 400% 400%;
+    animation: neon-border-flow 4s linear infinite;
+}
+
+@keyframes neon-border-flow {
+    0% { background-position: 0% 0%, 0% 50%; }
+    50% { background-position: 0% 0%, 100% 50%; }
+    100% { background-position: 0% 0%, 0% 50%; }
+}
+
+/* ============ 技能进度条 ============ */
+.skill-bar {
+    margin-bottom: 16px;
+}
+
+.skill-bar-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.skill-bar-name {
+    color: var(--text, #333);
+    font-weight: 600;
+}
+
+.skill-bar-percent {
+    color: var(--primary, #4dabf7);
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.skill-bar-track {
+    height: 10px;
+    border-radius: 5px;
+    background: var(--skill-track-bg, rgba(0, 0, 0, 0.08));
+    overflow: hidden;
+}
+
+.skill-bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+    background: linear-gradient(90deg, var(--primary, #4dabf7), var(--accent, #9775fa));
+    position: relative;
+}
+
+.skill-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: skill-shimmer 2s ease-in-out infinite;
+}
+
+@keyframes skill-shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ============ 自定义滚动条 ============ */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary, #4dabf7), var(--accent, #9775fa));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--primary, #ff6b6b), var(--accent, #ffa94d));
+}
+
+/* ============ 性能优化 ============ */
+@media (prefers-reduced-motion: reduce) {
+    .star,
+    .meteor,
+    .floating-particle,
+    .holo-border,
+    .holo-scanline::after,
+    .typing-text,
+    .scroll-reveal,
+    .scroll-reveal-left,
+    .scroll-reveal-right,
+    .scroll-reveal-scale,
+    .neon-border,
+    .skill-bar-fill,
+    .skill-bar-fill::after {
+        animation: none;
+    }
+    .scroll-reveal,
+    .scroll-reveal-left,
+    .scroll-reveal-right,
+    .scroll-reveal-scale {
+        opacity: 1;
+        transform: none;
+    }
+    #particle-canvas {
+        display: none;
+    }
+}
+
+/* ============ 鼠标追逐者 ============ */
+.chaser {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: none;
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+.chaser-star {
+    font-size: 24px;
+    animation: chaser-pulse 0.5s ease-in-out infinite alternate;
+}
+
+.chaser-heart {
+    font-size: 20px;
+    animation: chaser-heartbeat 0.8s ease-in-out infinite;
+}
+
+.chaser-cat {
+    font-size: 28px;
+    animation: chaser-wobble 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes chaser-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes chaser-heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.3); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.2); }
+}
+
+@keyframes chaser-wobble {
+    0% { transform: rotate(-10deg) scale(1); }
+    100% { transform: rotate(10deg) scale(1.1); }
+}
+
+/* 追到时的爆发效果 */
+.chaser-caught {
+    animation: chaser-caught-anim 0.6s ease-out forwards;
+}
+
+@keyframes chaser-caught-anim {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(2); opacity: 0.8; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+/* 追逐者思考气泡 */
+.chaser-bubble {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: bubble-pop 2s ease-in-out forwards;
+}
+
+.chaser-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(255, 255, 255, 0.9);
+}
+
+@keyframes bubble-pop {
+    0% { opacity: 0; transform: translateX(-50%) translateY(5px) scale(0.8); }
+    20% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+}
+
+/* ============ 追逐者技能动画 ============ */
+
+/* star: 瞬移前摇（蓄力） */
+.chaser-casting {
+    animation: casting-charge 0.8s ease-in-out infinite !important;
+    filter: drop-shadow(0 0 15px #ffd43b) brightness(1.3) !important;
+}
+
+@keyframes casting-charge {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg); 
+        filter: drop-shadow(0 0 10px #ffd43b) brightness(1.2);
+    }
+    50% { 
+        transform: scale(1.3) rotate(15deg); 
+        filter: drop-shadow(0 0 25px #ffd43b) drop-shadow(0 0 40px #fff) brightness(1.8);
+    }
+}
+
+/* star: 瞬移闪烁 */
+.chaser-teleport {
+    animation: teleport-flash 0.5s ease-out !important;
+}
+
+@keyframes teleport-flash {
+    0% { opacity: 1; filter: drop-shadow(0 0 8px #ffd43b) brightness(1); }
+    20% { opacity: 0; filter: drop-shadow(0 0 20px #ffd43b) brightness(3); transform: scale(1.5); }
+    50% { opacity: 0; filter: drop-shadow(0 0 30px #fff) brightness(5); transform: scale(2); }
+    80% { opacity: 1; filter: drop-shadow(0 0 15px #ffd43b) brightness(2); transform: scale(0.8); }
+    100% { opacity: 1; filter: drop-shadow(0 0 8px #ffd43b) brightness(1); transform: scale(1); }
+}
+
+/* 瞬移拖影 */
+.chaser-star::after {
+    content: '✦';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 10px;
+    color: #ffd43b;
+    opacity: 0;
+}
+
+.chaser-teleport::after {
+    animation: sparkle-trail 0.5s ease-out;
+}
+
+@keyframes sparkle-trail {
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(-20px, -10px) scale(0); }
+}
+
+/* heart: 加速特效 */
+.chaser-boost {
+    animation: boost-speed 0.3s ease-in-out infinite alternate !important;
+    filter: drop-shadow(0 0 12px #ff69b4) drop-shadow(0 0 24px #ff1493) !important;
+}
+
+@keyframes boost-speed {
+    0% { transform: scale(1) skewX(-5deg); }
+    100% { transform: scale(1.15) skewX(5deg); }
+}
+
+/* heart 加速拖尾 */
+.chaser-heart.chaser-boost::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 16px;
+    height: 8px;
+    background: radial-gradient(ellipse, #ff69b4, transparent);
+    border-radius: 50%;
+    animation: boost-trail 0.2s ease-out infinite;
+}
+
+@keyframes boost-trail {
+    0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+    100% { opacity: 0; transform: translateX(-50%) translateX(-15px) scale(1.5); }
+}
+
+/* cat: 穿墙幽灵特效 */
+.chaser-cat {
+    transition: opacity 0.3s;
+}
+
+/* cat 接近障碍物时半透明 */
+.chaser-cat.chaser-phasing {
+    opacity: 0.5;
+    filter: drop-shadow(0 0 12px rgba(77, 171, 247, 0.8)) !important;
+}

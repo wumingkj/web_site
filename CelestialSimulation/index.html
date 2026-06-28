@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CelestialSimulation - 天体模拟教学软件</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%237c5cfc' stroke='%2300d4ff' stroke-width='3'/><ellipse cx='50' cy='50' rx='60' ry='14' fill='none' stroke='%2300d4ff' stroke-width='2' transform='rotate(-20 50 50)'/><circle cx='30' cy='30' r='5' fill='%23ffffff' opacity='0.8'/><circle cx='65' cy='40' r='3' fill='%23ffffff' opacity='0.6'/><circle cx='45' cy='65' r='2' fill='%23ffffff' opacity='0.5'/></svg>">
+    <link rel="stylesheet" href="/CelestialSimulation/css/style.css">
+</head>
+<body>
+    <nav class="toc" id="toc">
+        <button class="toc-toggle" id="toc-toggle" title="折叠大纲">▶</button>
+        <div class="toc-inner">
+            <div class="toc-header">大纲</div>
+            <ul class="toc-list">
+                <li><a href="#features" data-section="features">核心功能</a></li>
+                <li><a href="#background" data-section="background">教学背景</a></li>
+                <li><a href="#solar-detail" data-section="solar-detail">太阳系模拟</a></li>
+                <li><a href="#gravity-detail" data-section="gravity-detail">引力沙盒</a></li>
+                <li><a href="#preview" data-section="preview">软件界面</a></li>
+                <li><a href="#tech" data-section="tech">技术实力</a></li>
+                <li><a href="#application" data-section="application">应用价值</a></li>
+                <li><a href="#download" data-section="download">开始使用</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="stars-bg"></div>
+
+    <header class="hero">
+        <div class="hero-content">
+            <div class="badge">码力全开 · 智创未来</div>
+            <h1><span class="title-icon"></span> CelestialSimulation</h1>
+            <p class="hero-subtitle">3D 太阳系模拟 · 引力实验沙盒</p>
+            <p class="hero-desc">基于真实物理引擎的天体模拟教学软件，<br>让天文学触手可及</p>
+            <div class="hero-actions">
+                <a href="/CelestialSimulation/assets/CelestialSimulation.exe" class="btn-primary" id="btn-download-hero">⬇ 免费下载</a>
+                <a href="https://github.com/wumingkj/CelestialSimulation" target="_blank" rel="noopener" class="btn-github">
+                    <svg class="github-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                    在 GitHub 上查看
+                </a>
+                <a href="#features" class="btn-secondary">了解更多</a>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <span class="scroll-arrow"></span>
+        </div>
+    </header>
+
+    <main>
+        <section id="features" class="section">
+            <h2 class="section-title">核心功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>太阳系模拟</h3>
+                    <p>八大行星 + 主要卫星，17 个天体实时运动。拖拽时间轴，正反向播放，自由切换观察视角。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧲</div>
+                    <h3>引力实验沙盒</h3>
+                    <p>拖拽发射粒子，观察 N 体引力交互。支持自定义引力律，直观感受混沌系统的魅力。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>3D 实时渲染</h3>
+                    <p>ModernGL 驱动，165+ FPS 流畅运行。17 种高清纹理贴图，还原真实行星外观。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>O(1) 时间跳转</h3>
+                    <p>基于开普勒方程求解器，任意时间点瞬间跳转，完全可逆，零延迟。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>双模式运行</h3>
+                    <p>GUI 3D 模式 + CLI 命令行模式。无显卡自动降级，所有设备都能用。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>开箱即用</h3>
+                    <p>下载即用，无需复杂配置。一键启动，即刻探索太阳系。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="background" class="section section-alt">
+            <h2 class="section-title">教学背景</h2>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">📖</div>
+                    <h3>知识抽象</h3>
+                    <p>万有引力、开普勒定律等概念高度抽象，学生难以建立空间直觉</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">📐</div>
+                    <h3>手段静态化</h3>
+                    <p>传统教学依赖课本插图与静态模型，无法展示天体运动的动态过程</p>
+                </div>
+            </div>
+            <div class="solution-banner">
+                <div class="solution-icon">💡</div>
+                <div>
+                    <strong>我们的解决方案</strong>
+                    <p>专为 Windows 优化的交互式软件：实时 3D 可视化呈现太阳系运行，引力实验沙盒让学生从被动接受转变为主动探索</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="solar-detail" class="section">
+            <h2 class="section-title">太阳系模拟：穿越时空的行星之旅</h2>
+            <div class="feature-detail">
+                <div class="feature-visual solar-visual">
+                    <div class="mini-solar">
+                        <div class="sun-core"></div>
+                        <div class="orbit o1"><div class="planet p1"></div></div>
+                        <div class="orbit o2"><div class="planet p2"></div></div>
+                        <div class="orbit o3"><div class="planet p3"></div></div>
+                    </div>
+                </div>
+                <div class="feature-points">
+                    <div class="point">
+                        <span class="point-bullet">⏱️</span>
+                        <div>
+                            <strong>任意时间跳转</strong>
+                            <p>通过时间滑块自由探索过去与未来的宇宙图景，正反向无缝播放</p>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <span class="point-bullet">⚡</span>
+                        <div>
+                            <strong>O(1) 瞬时定位</strong>
+                            <p>采用开普勒轨道直接求解算法，牛顿迭代求解开普勒方程，任意时间点零延迟跳转</p>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <span class="point-bullet">🎮</span>
+                        <div>
+                            <strong>多维交互控制</strong>
+                            <p>滚轮缩放视角、中键拖拽旋转、方向键切换焦点天体，八大行星 + 主要卫星共 17 个天体</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gravity-detail" class="section section-alt">
+            <h2 class="section-title">引力实验沙盒：亲手创造宇宙规律</h2>
+            <div class="feature-detail reverse">
+                <div class="feature-points">
+                    <div class="point">
+                        <span class="point-bullet">🪐</span>
+                        <div>
+                            <strong>自由创建星体</strong>
+                            <p>自定义质量、半径、颜色、自转速度与轴倾角，打造专属天体系统</p>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <span class="point-bullet">🚀</span>
+                        <div>
+                            <strong>动态发射机制</strong>
+                            <p>拖拽发射粒子，观察引力捕获与轨道形成的完整过程</p>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <span class="point-bullet">🌀</span>
+                        <div>
+                            <strong>混沌现象可视化</strong>
+                            <p>支持暂停与加速，便于演示三体问题等经典混沌系统</p>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <span class="point-bullet">🔬</span>
+                        <div>
+                            <strong>可选物理规则</strong>
+                            <p>对比不同引力律下的运动差异，通过 additional_forces 接口叠加差值修正</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-visual gravity-visual">
+                    <div class="particle-field">
+                        <div class="pf-center"></div>
+                        <div class="pf-particle pf1"></div>
+                        <div class="pf-particle pf2"></div>
+                        <div class="pf-particle pf3"></div>
+                        <div class="pf-particle pf4"></div>
+                        <div class="pf-particle pf5"></div>
+                        <div class="pf-particle pf6"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="preview" class="section">
+            <h2 class="section-title">软件界面</h2>
+            <div class="preview-grid">
+                <div class="preview-card">
+                    <div class="preview-img solar-preview">
+                        <span class="preview-label">太阳系模拟</span>
+                    </div>
+                    <p>实时追踪行星运动轨迹，自由缩放与旋转视角</p>
+                </div>
+                <div class="preview-card">
+                    <div class="preview-img gravity-preview">
+                        <span class="preview-label">引力实验沙盒</span>
+                    </div>
+                    <p>拖拽发射粒子，观察混沌引力系统的演化</p>
+                </div>
+                <div class="preview-card">
+                    <div class="preview-img cli-preview">
+                        <span class="preview-label">命令行模式</span>
+                    </div>
+                    <p>纯文本交互，无需显卡，支持数据导出</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech" class="section section-alt">
+            <h2 class="section-title">技术实力</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-card-header">
+                        <span class="tech-icon">📦</span>
+                        <h3>单文件部署</h3>
+                    </div>
+                    <p>可打包为单一 .exe 文件，复制即用，无需管理员权限，支持 U 盘便携模式</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-card-header">
+                        <span class="tech-icon">🖥️</span>
+                        <h3>智能降级</h3>
+                    </div>
+                    <p>支持 OpenGL 3.3+ 设备，不满足时自动降级至 CLI 模式，确保在各种 Windows 环境中流畅运行</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-card-header">
+                        <span class="tech-icon">⌨️</span>
+                        <h3>原生 CLI 交互</h3>
+                    </div>
+                    <p>CLI 模式下基于 msvcrt 实现原生键盘支持，方向键翻阅命令历史，支持数据导出 CSV</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-card-header">
+                        <span class="tech-icon">🧮</span>
+                        <h3>科学计算内核</h3>
+                    </div>
+                    <p>REBOUND N 体模拟库 ias15 自适应积分器，带软化核防止近距离力发散，具备科研级精度</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-card-header">
+                        <span class="tech-icon">🎨</span>
+                        <h3>高性能图形引擎</h3>
+                    </div>
+                    <p>ModernGL + GLFW 驱动，165+ FPS 流畅运行，VAO 缓存球体网格，文字纹理 GL 缓存</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-card-header">
+                        <span class="tech-icon">🔧</span>
+                        <h3>技术栈</h3>
+                    </div>
+                    <p>Python · ModernGL · GLFW · REBOUND · NumPy · Pillow · pyrr · PyInstaller</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="application" class="section">
+            <h2 class="section-title">应用价值</h2>
+            <div class="app-grid">
+                <div class="app-card">
+                    <span class="app-icon">🏫</span>
+                    <h3>课堂教学辅助</h3>
+                    <p>实时演示行星轨道演化，将抽象概念转化为直观视觉体验</p>
+                </div>
+                <div class="app-card">
+                    <span class="app-icon">🎤</span>
+                    <h3>科普讲座展示</h3>
+                    <p>作为互动展项提升趣味性，吸引观众参与天文探索</p>
+                </div>
+                <div class="app-card">
+                    <span class="app-icon">🔍</span>
+                    <h3>学生探究项目</h3>
+                    <p>支持自主设计引力实验，培养科学思维与探究能力</p>
+                </div>
+            </div>
+            <div class="closing-statement">
+                <p class="closing-main">一款真正专为 Windows 平台设计的教学利器</p>
+                <p class="closing-sub">极低使用门槛 · 便捷部署方式 · 强大教育推广潜力</p>
+                <div class="closing-highlight">
+                    <span>🚀</span>
+                    <p>在 Windows 这一最广泛使用的教育系统上，<br>帮助每一位师生轻松构建属于自己的<strong>桌面宇宙实验室</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="section section-alt">
+            <h2 class="section-title">开始使用</h2>
+            <div class="download-card">
+                <div class="env-info">
+                    <h4>运行环境</h4>
+                    <ul>
+                        <li>Windows 10 64位</li>
+                        <li>Python 3.8+（源码运行需要）</li>
+                        <li>OpenGL 3.3+ 显卡（可选，兼容降级）</li>
+                    </ul>
+                </div>
+                <div class="install-info">
+                    <h4>快速开始</h4>
+                    <pre><code>pip install -r requirements.txt
+python main.py</code></pre>
+                </div>
+                <a href="/CelestialSimulation/assets/CelestialSimulation.exe" class="btn-primary btn-large" id="btn-download-bottom">⬇ 下载 Windows 版</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>参赛小组：我掘得队 &nbsp;|&nbsp; 竞赛主题：码力全开·智创未来</p>
+        <p class="footer-sub">Powered by wuming</p>
+    </footer>
+    <script src="/CelestialSimulation/js/effects.js"></script>
+    <script>
+        (function() {
+            var releaseUrl = 'https://github.com/wumingkj/CelestialSimulation/releases';
+            var btns = document.querySelectorAll('#btn-download-hero, #btn-download-bottom');
+
+            fetch('/CelestialSimulation/assets/latest.json')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (!data.file) throw new Error('no file');
+                    var exePath = '/CelestialSimulation/assets/' + data.file;
+                    return fetch(exePath, { method: 'HEAD' }).then(function(res) {
+                        if (!res.ok) throw new Error('exe not found');
+                        btns.forEach(function(btn) {
+                            btn.href = exePath;
+                            if (data.version) {
+                                btn.textContent = btn.textContent.replace('⬇', '').trim() + ' v' + data.version;
+                            }
+                        });
+                    });
+                })
+                .catch(function() {
+                    btns.forEach(function(btn) {
+                        btn.href = releaseUrl;
+                        btn.textContent = btn.textContent.replace('⬇', '').trim() + ' (GitHub)';
+                    });
+                });
+        })();
+    </script>
+</body>
+</html>
