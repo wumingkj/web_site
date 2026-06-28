@@ -137,6 +137,9 @@ function renderPost(post) {
         contentEl.innerHTML = content;
     }
 
+    // 构建大纲
+    buildTOC();
+
     // 上一篇/下一篇
     if (post.prev) {
         const prevEl = document.getElementById('prev-post');
@@ -255,6 +258,79 @@ async function submitComment(e) {
 
 function updatePageTitle(title) {
     document.title = `${title} | Wuming Blog`;
+}
+
+function buildTOC() {
+    var tocList = document.getElementById('toc-list');
+    if (!tocList) return;
+
+    var contentEl = document.getElementById('post-content');
+    if (!contentEl) return;
+
+    var headings = contentEl.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        document.getElementById('toc').style.display = 'none';
+        return;
+    }
+
+    var html = '';
+    headings.forEach(function (h, i) {
+        var id = 'heading-' + i;
+        h.id = id;
+        var isH3 = h.tagName === 'H3';
+        html += '<li><a href="#' + id + '" class="' + (isH3 ? 'toc-h3' : '') + '">' + h.textContent + '</a></li>';
+    });
+    tocList.innerHTML = html;
+
+    var tocToggle = document.getElementById('toc-toggle');
+    if (tocToggle) {
+        tocToggle.addEventListener('click', function () {
+            var toc = document.getElementById('toc');
+            toc.classList.toggle('collapsed');
+            tocToggle.textContent = toc.classList.contains('collapsed') ? '◀' : '▶';
+        });
+    }
+
+    var tocLinks = tocList.querySelectorAll('a');
+    tocLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            var target = document.getElementById(this.getAttribute('href').substring(1));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    var scrollTimer;
+    window.addEventListener('scroll', function () {
+        if (scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(updateActiveTOC, 100);
+    });
+
+    updateActiveTOC();
+}
+
+function updateActiveTOC() {
+    var tocLinks = document.querySelectorAll('#toc-list a');
+    var headings = document.querySelectorAll('#post-content h2[id], #post-content h3[id]');
+    if (!tocLinks.length || !headings.length) return;
+
+    var currentIndex = -1;
+    var scrollTop = window.scrollY + 100;
+    headings.forEach(function (h, i) {
+        if (h.offsetTop <= scrollTop) {
+            currentIndex = i;
+        }
+    });
+
+    tocLinks.forEach(function (link) {
+        link.classList.remove('active');
+    });
+
+    if (currentIndex >= 0) {
+        tocLinks[currentIndex].classList.add('active');
+    }
 }
 
 function showError(message) {

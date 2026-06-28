@@ -16,7 +16,7 @@ var HubConfig = (function () {
             id: 'blog',
             name: '个人博客',
             desc: '记录学习、思考与生活的点滴，分享技术文章与个人感悟。',
-            url: '/blog/',
+            url: '/blog_ref/',
             icon: '📝',
             iconClass: 'blog',
             status: 'online',

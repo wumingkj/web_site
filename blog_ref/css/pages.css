@@ -1,5 +1,13 @@
 /* ==================== 页面通用样式 ==================== */
 
+.page-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 100px 30px 50px;
+    position: relative;
+    z-index: 10;
+}
+
 .page-header {
     text-align: center;
     margin-bottom: 40px;
@@ -802,6 +810,20 @@
     font-size: 22px;
     margin: 30px 0 15px;
     color: var(--text-dark);
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(77, 171, 247, 0.15);
+    position: relative;
+}
+
+.about-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--gradient-rainbow);
+    border-radius: 1px;
 }
 
 .about-content p {
@@ -841,6 +863,71 @@
     font-size: 14px;
     color: var(--text-light);
     margin-top: 5px;
+}
+
+.about-bio {
+    font-size: 15px;
+    line-height: 2;
+    color: var(--text);
+    background: rgba(77, 171, 247, 0.04);
+    border-radius: 14px;
+    padding: 16px 20px;
+    border: 1px solid rgba(77, 171, 247, 0.08);
+}
+
+.about-contact {
+    background: linear-gradient(135deg, rgba(77, 171, 247, 0.04), rgba(218, 119, 242, 0.04));
+    border-radius: 14px;
+    padding: 16px 20px;
+    border: 1px solid rgba(77, 171, 247, 0.1);
+    line-height: 2;
+}
+
+.about-contact p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.about-contact p:last-child {
+    margin-bottom: 0;
+}
+
+.about-contact a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--primary-light);
+}
+
+.about-contact a:hover {
+    border-bottom-style: solid;
+}
+
+.about-contact-ending {
+    margin-top: 12px !important;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(77, 171, 247, 0.15);
+    text-align: center;
+    color: var(--primary) !important;
+    font-weight: 600;
+}
+
+.about-site-info {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 14px;
+    padding: 16px 20px;
+    border: 1px solid var(--glass-border);
+    line-height: 2;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.about-site-info p {
+    margin-bottom: 6px;
+}
+
+.about-site-info p:last-child {
+    margin-bottom: 0;
 }
 
 /* ==================== 文章详情页 ==================== */
@@ -1372,6 +1459,10 @@
 /* ==================== 响应式 ==================== */
 
 @media (max-width: 600px) {
+    .page-container {
+        padding: 80px 16px 40px;
+    }
+
     .tag-item {
         padding: 8px 18px;
         font-size: 14px;

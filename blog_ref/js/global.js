@@ -715,6 +715,10 @@
             }
             btn.addEventListener('click', function () {
                 self._lrcMode = (self._lrcMode === 'float') ? 'toast' : 'float';
+                if (self._lrcMode === 'float') {
+                    var lrcContainer = document.getElementById('toast-lrc-container');
+                    if (lrcContainer) lrcContainer.innerHTML = '';
+                }
                 updateUI();
             });
             updateUI();

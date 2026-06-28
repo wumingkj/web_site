@@ -76,10 +76,6 @@
     // ==================== 清理旧页面脚本 ====================
     function cleanupScripts() {
         document.dispatchEvent(new CustomEvent('page:beforeunload'));
-        for (var i = 0; i < _scripts.length; i++) {
-            var s = _scripts[i];
-            if (s && s.parentNode) s.remove();
-        }
         _scripts = [];
     }
 
@@ -123,14 +119,9 @@
                     // 4.5 先派发 page:loaded（在加载外部脚本前，避免重复初始化）
                     document.dispatchEvent(new CustomEvent('page:loaded', { detail: { href: href } }));
 
-                    // 5. 加载外部脚本（跳过全局脚本）
+                    // 5. 加载外部脚本（每次创建独立作用域，避免 let/const 重复声明冲突）
                     var extScripts = appEl.querySelectorAll('script[src]');
                     var pending = 0;
-
-                    var existing = [];
-                    document.querySelectorAll('script[src]').forEach(function (s) {
-                        existing.push(s.getAttribute('src').split('?')[0]);
-                    });
 
                     function checkDone() {
                         if (pending === 0) {
@@ -141,15 +132,27 @@
                     for (var j = 0; j < extScripts.length; j++) {
                         var src = extScripts[j].getAttribute('src');
                         var base = src.split('?')[0];
-                        if (isGlobal(src) || existing.indexOf(base) !== -1) continue;
-                        existing.push(base);
+                        if (isGlobal(src)) continue;
                         pending++;
-                        var script = document.createElement('script');
-                        script.src = src;
-                        script.onload = function () { pending--; checkDone(); };
-                        script.onerror = function () { pending--; checkDone(); };
-                        document.body.appendChild(script);
-                        _scripts.push(script);
+                        _scripts.push(src);
+                        (function (url) {
+                            fetch(url)
+                                .then(function (res) { return res.text(); })
+                                .then(function (code) {
+                                    try {
+                                        (new Function(code))();
+                                    } catch (e) {
+                                        console.warn('router: script error', url, e);
+                                    }
+                                    pending--;
+                                    checkDone();
+                                })
+                                .catch(function () {
+                                    console.warn('router: script load failed', url);
+                                    pending--;
+                                    checkDone();
+                                });
+                        })(src);
                     }
 
                     checkDone();
