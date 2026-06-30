@@ -19,9 +19,11 @@ async function initHomePage() {
             if (data.announcements) {
                 renderAnnouncements(data.announcements);
             }
+        } else {
+            console.warn('Home: API 返回异常', data);
         }
     } catch (error) {
-        console.error('Init error:', error);
+        console.error('Home: 初始化失败', error);
     }
 }
 
@@ -126,8 +128,9 @@ if (document.readyState === 'loading') {
     initHomePage();
 }
 
-document.addEventListener('page:loaded', function () {
-    if (window.location.pathname === '/blog/' || window.location.pathname === '/blog/index.html') {
+document.addEventListener('page:loaded', function (e) {
+    var href = e.detail && e.detail.href;
+    if (href === '/blog/' || href === '/blog/index.html') {
         initHomePage();
     }
 });

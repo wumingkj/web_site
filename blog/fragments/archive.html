@@ -1,0 +1,51 @@
+<div class="page-header">
+    <h1>📜 全部文章</h1>
+    <p>时间是最好的记录者</p>
+</div>
+
+<div class="filter-panel" id="filter-panel">
+    <div class="filter-section">
+        <span class="filter-label">📊 排序方式：</span>
+        <div class="filter-options" id="sort-options">
+            <button class="filter-btn active" data-sort="created_at" data-order="DESC">
+                <span class="sort-icon">📅</span> 发布时间
+                <span class="sort-arrow">↓</span>
+            </button>
+            <button class="filter-btn" data-sort="views" data-order="DESC">
+                <span class="sort-icon">🔥</span> 浏览量
+                <span class="sort-arrow">↓</span>
+            </button>
+            <button class="filter-btn" data-sort="comments" data-order="DESC">
+                <span class="sort-icon">💬</span> 评论数
+                <span class="sort-arrow">↓</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="filter-section">
+        <span class="filter-label">🏷️ 标签筛选（可多选）：</span>
+        <div class="filter-tags" id="filter-tags">
+            <button class="filter-tag active" data-tag="">全部</button>
+        </div>
+    </div>
+
+    <div class="filter-section">
+        <span class="filter-label">📁 分类筛选：</span>
+        <div class="filter-tags" id="filter-categories">
+            <button class="filter-tag active" data-category="">全部</button>
+        </div>
+    </div>
+
+    <div class="filter-status" id="filter-status">
+        <span class="status-text">显示全部文章</span>
+        <button class="clear-filter" id="clear-filter" style="display: none;">清除筛选</button>
+    </div>
+</div>
+
+<div class="archive-timeline" id="archive-timeline"></div>
+
+<div class="archive-stats">
+    <p>共发表了 <strong id="total-posts">0</strong> 篇文章</p>
+</div>
+
+<script src="/blog/js/archive.js?v=14"></script>

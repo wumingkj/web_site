@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录/注册 - Wuming Blog</title>
     <link rel="icon" href="/blog/assets/images/icon.ico">
-    <link rel="stylesheet" href="/blog/css/style.css?v=14">
-    <link rel="stylesheet" href="/blog/css/pages.css?v=12">
-    <link rel="stylesheet" href="/blog/css/toast.css?v=4">
+    <link rel="stylesheet" href="/blog/css/global.css">
+    <link rel="stylesheet" href="/blog/css/pages.css">
+    <link rel="stylesheet" href="/blog/css/toast.css">
     <style>
         .admin-hint { display: none; }
         .login-container {
@@ -319,16 +319,8 @@
         </div>
     </main>
     
-    <script src="/blog/js/page-transition.js?v=4"></script>
-    <script src="/blog/js/common.js?v=23"></script>
-    <script src="/blog/js/toast.js?v=6"></script>
-    <script src="/blog/js/login.js?v=1"></script>
-    <script>
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initLoginPage);
-        } else {
-            initLoginPage();
-        }
-    </script>
+    <script src="/blog/js/toast.js"></script>
+    <script src="/blog/js/global.js"></script>
+    <script src="/blog/js/login.js"></script>
 </body>
 </html>
