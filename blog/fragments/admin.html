@@ -1,0 +1,136 @@
+<style>
+/* SPA 模式下，page-container 已有顶部间距，admin-container 减少上边距 */
+.admin-container {
+    margin-top: 0;
+}
+</style>
+
+<main class="admin-container">
+    <div class="admin-sidebar">
+        <div class="admin-user">
+            <a href="/blog/pages/profile.html" class="admin-avatar-link" id="adminAvatar">👨‍💼</a>
+            <a href="/blog/pages/profile.html" class="admin-name" id="adminName">加载中...</a>
+            <div class="admin-role" id="adminRole">管理员</div>
+        </div>
+        <nav class="admin-nav">
+            <a href="#" class="admin-nav-item active" data-section="posts">
+                <span class="icon">📝</span>
+                <span>文章管理</span>
+            </a>
+            <a href="#" class="admin-nav-item" data-section="comments">
+                <span class="icon">💬</span>
+                <span>评论管理</span>
+            </a>
+            <a href="#" class="admin-nav-item" data-section="stats">
+                <span class="icon">📊</span>
+                <span>统计信息</span>
+            </a>
+            <a href="#" class="admin-nav-item" data-section="settings">
+                <span class="icon">⚙️</span>
+                <span>系统设置</span>
+            </a>
+        </nav>
+    </div>
+    
+    <div class="admin-content">
+        <section class="admin-section active" id="postsSection">
+            <div class="section-header">
+                <h2>📝 文章管理</h2>
+                <div class="section-actions">
+                    <div class="status-filter">
+                        <button class="filter-btn active" data-status="all">全部</button>
+                        <button class="filter-btn" data-status="published">已发布</button>
+                        <button class="filter-btn" data-status="draft">草稿</button>
+                    </div>
+                    <button class="btn-primary" id="newPostBtn">+ 新建文章</button>
+                </div>
+            </div>
+            <div class="posts-list" id="postsList">加载中...</div>
+        </section>
+        
+        <section class="admin-section" id="commentsSection">
+            <div class="section-header">
+                <h2>💬 评论管理</h2>
+            </div>
+            <div class="comments-list" id="commentsList">加载中...</div>
+        </section>
+        
+        <section class="admin-section" id="statsSection">
+            <div class="section-header">
+                <h2>📊 统计信息</h2>
+            </div>
+            <div class="stats-grid" id="statsGrid">加载中...</div>
+        </section>
+        
+        <section class="admin-section" id="settingsSection">
+            <div class="section-header">
+                <h2>⚙️ 系统设置</h2>
+            </div>
+            <div class="settings-form" id="settingsForm">
+                <div class="setting-group">
+                    <label>修改密码</label>
+                    <input type="password" id="oldPassword" placeholder="当前密码">
+                    <input type="password" id="newPassword" placeholder="新密码">
+                    <input type="password" id="confirmPassword" placeholder="确认新密码">
+                    <button class="btn-secondary" id="changePwdBtn">修改密码</button>
+                </div>
+                <div class="setting-group">
+                    <label>数据管理</label>
+                    <button class="btn-secondary" id="backupBtn">备份数据</button>
+                    <button class="btn-danger" id="clearCacheBtn">清除缓存</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- 文章编辑弹窗 -->
+<div class="modal-overlay" id="postModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">新建文章</h3>
+            <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="postId">
+            <div class="form-group">
+                <label>标题</label>
+                <input type="text" id="postTitle" placeholder="请输入文章标题">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>分类</label>
+                    <div id="categoryOptions" class="radio-group">加载中...</div>
+                    <input type="hidden" id="postCategoryId">
+                </div>
+                <div class="form-group">
+                    <label>标签</label>
+                    <div id="tagOptions" class="checkbox-group">加载中...</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>摘要</label>
+                <textarea id="postExcerpt" rows="2" placeholder="请输入摘要"></textarea>
+            </div>
+            <div class="form-group">
+                <label>内容（支持Markdown格式）</label>
+                <textarea id="postContent" rows="15" placeholder="请输入文章内容..."></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>状态</label>
+                    <select id="postStatus">
+                        <option value="published">已发布</option>
+                        <option value="draft">草稿</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" id="modalCancel">取消</button>
+            <button class="btn-primary" id="modalSave">保存</button>
+        </div>
+    </div>
+</div>
+
+<script src="/blog/js/admin.js?v=3"></script>

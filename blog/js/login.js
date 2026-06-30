@@ -2,6 +2,8 @@
  * Wuming Blog - 登录/注册页面脚本
  */
 
+window.__navigate = window.__navigate || function (url) { window.location.href = url; };
+
 function initLoginPage() {
     // Tab切换
     document.querySelectorAll('.login-tab').forEach(function (tab) {
@@ -67,11 +69,14 @@ function initLoginPage() {
 
                 if (data.success) {
                     showSuccess('登录成功！正在跳转...');
+                    if (data.user && window.WumingBlog && window.WumingBlog.updateAuthUI) {
+                        window.WumingBlog.updateAuthUI(data.user);
+                    }
                     setTimeout(function () {
                         if (data.user && data.user.role === 'admin') {
-                            window.location.href = '/blog/pages/admin.html';
+                            window.__navigate('/blog/pages/admin.html');
                         } else {
-                            window.location.href = '/blog/';
+                            window.__navigate('/blog/');
                         }
                     }, 1500);
                 } else {
@@ -133,7 +138,7 @@ function initLoginPage() {
                 if (data.success) {
                     showSuccess('注册成功！正在跳转...');
                     setTimeout(function () {
-                        window.location.href = '/blog/';
+                        window.__navigate('/blog/');
                     }, 1000);
                 } else {
                     showError(data.message || '注册失败');
@@ -152,10 +157,13 @@ function initLoginPage() {
         .then(function (res) { return res.json(); })
         .then(function (data) {
             if (data.success && data.loggedin && data.user) {
+                if (window.WumingBlog && window.WumingBlog.updateAuthUI) {
+                    window.WumingBlog.updateAuthUI(data.user);
+                }
                 if (data.user.role === 'admin') {
-                    window.location.href = '/blog/pages/admin.html';
+                    window.__navigate('/blog/pages/admin.html');
                 } else {
-                    window.location.href = '/blog/';
+                    window.__navigate('/blog/');
                 }
             }
         })

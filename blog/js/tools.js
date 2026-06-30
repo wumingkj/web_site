@@ -312,3 +312,17 @@ if (document.readyState === 'loading') {
 } else {
     initToolsPage();
 }
+
+window.generatePassword = generatePassword;
+window.copyToClip = copyToClip;
+window.formatJSON = formatJSON;
+window.minifyJSON = minifyJSON;
+window.tsToDate = tsToDate;
+window.dateToTs = dateToTs;
+window.encodeB64 = encodeB64;
+window.decodeB64 = decodeB64;
+window.encodeURI_ = encodeURI_;
+window.decodeURI_ = decodeURI_;
+window.genHash = genHash;
+window.genUUIDs = genUUIDs;
+window.copyAllUUIDs = copyAllUUIDs;

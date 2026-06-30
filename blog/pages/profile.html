@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/blog/css/global.css?v=1">
     <link rel="stylesheet" href="/blog/css/pages.css?v=10">
     <link rel="stylesheet" href="/blog/css/toast.css?v=4">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
     <style>
         .profile-container {
             max-width: 600px;
@@ -452,21 +453,20 @@
 <body>
     <!-- 顶部导航栏 -->
     <nav class="navbar">
-        <div class="nav-content">
-            <a href="/blog/" class="logo">✨ Wuming Blog</a>
-            <div class="nav-links">
-                <a href="/blog/">首页</a>
-                <a href="/blog/pages/archive.html">文章</a>
-                <a href="/blog/pages/tools.html">🔧 工具</a>
-                <a href="/blog/pages/about.html">关于</a>
-                <a href="/blog/pages/login.html">🔐</a>
-            </div>
-            <button class="menu-toggle" id="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+        <a href="/blog/" class="logo">
+            <span>✨</span>
+            Wuming Blog
+        </a>
+        <div class="nav-links" id="nav-links">
+            <a href="/blog/">首页</a>
+            <a href="/blog/pages/archive.html">文章</a>
+            <a href="/blog/pages/tools.html">🔧 工具</a>
+            <a href="/blog/pages/about.html">关于</a>
+            <a href="/blog/pages/login.html">🔐</a>
         </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
     
     <!-- 移动端侧边栏 -->
@@ -485,7 +485,36 @@
             <a href="/blog/pages/login.html" class="sidebar-nav-item">🔐 登录</a>
         </nav>
     </div>
-    
+
+    <!-- 音乐播放器面板 -->
+    <div class="music-player" id="music-player">
+        <div class="music-player-header">
+            <span class="music-player-icon">🎵</span>
+            <span class="music-player-title">Playlist</span>
+            <button class="music-player-lrc-toggle" id="music-player-lrc-toggle" title="切换歌词样式">🎤 歌词</button>
+            <button class="music-player-close" id="music-player-close">✕</button>
+        </div>
+        <div class="custom-volume" id="custom-volume">
+            <button class="custom-volume-mute" id="custom-volume-mute" title="静音">🔊</button>
+            <div class="custom-volume-track" id="custom-volume-track">
+                <div class="custom-volume-fill" id="custom-volume-fill"></div>
+                <div class="custom-volume-thumb" id="custom-volume-thumb"></div>
+            </div>
+            <span class="custom-volume-val" id="custom-volume-val">70</span>
+        </div>
+        <div class="music-player-body" id="music-player-body"></div>
+    </div>
+    <button class="music-player-fab" id="music-player-fab" title="音乐播放器">
+        <span class="music-fab-icon">🎵</span>
+        <span class="music-fab-wave"></span>
+    </button>
+
+    <!-- 歌词悬浮窗 -->
+    <div class="lrc-float" id="lrc-float">
+        <div class="lrc-float-top" id="lrc-float-top"></div>
+        <div class="lrc-float-bot" id="lrc-float-bot">♪ 暂未播放</div>
+    </div>
+
     <!-- 个人中心卡片 -->
     <main class="profile-container" id="page-content">
         <div class="profile-card" id="profileCard">
@@ -660,7 +689,10 @@
             try {
                 await fetch('/blog/api/auth.php?action=logout', { credentials: 'same-origin' });
                 Toast.success('已退出登录');
-                setTimeout(() => window.location.href = '/', 1000);
+                if (window.WumingBlog && window.WumingBlog.clearAuthUI) {
+                    window.WumingBlog.clearAuthUI();
+                }
+                setTimeout(() => (window.__navigate || function(u) { window.location.href = u; })('/blog/'), 1000);
             } catch (err) {
                 Toast.error('退出失败，请重试');
             }
@@ -968,5 +1000,18 @@
             loadProfile();
         }
     </script>
+
+    <!-- Live2D -->
+    <script src="/blog/live2d/core/pixi.min.js"></script>
+    <script src="/blog/live2d/core/live2dcubismcore.min.js"></script>
+    <script src="/blog/live2d/core/live2dcubismframework.js"></script>
+    <script src="/blog/live2d/core/live2dcubismpixi.js"></script>
+    <script src="/blog/live2d/core/l2d.js"></script>
+    <script src="/blog/live2d/charData.js"></script>
+    <script src="/blog/js/live2d_manager.js"></script>
+
+    <!-- 音乐播放器 -->
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
 </body>
 </html>

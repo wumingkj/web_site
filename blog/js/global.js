@@ -214,16 +214,19 @@
             var navLinks = document.querySelector('.nav-links');
             if (navLinks) {
                 var loginLink = navLinks.querySelector('a[href="/blog/pages/login.html"]');
+                var staleUserLink = navLinks.querySelector('.user-link');
                 if (loginLink) {
                     var userLink = document.createElement('a');
-                    userLink.href = '/blog/pages/profile.html';
+                    userLink.setAttribute('href', '/blog/pages/profile.html');
                     userLink.className = 'user-link';
                     userLink.innerHTML = this.renderAvatar(user.avatar) + ' ' + user.username;
                     loginLink.replaceWith(userLink);
+                } else if (staleUserLink) {
+                    staleUserLink.innerHTML = this.renderAvatar(user.avatar) + ' ' + user.username;
                 }
                 if (user.role === 'admin' && !navLinks.querySelector('.admin-link') && !document.body.classList.contains('admin-page')) {
                     var adminLink = document.createElement('a');
-                    adminLink.href = '/blog/pages/admin.html';
+                    adminLink.setAttribute('href', '/blog/pages/admin.html');
                     adminLink.className = 'admin-link';
                     adminLink.innerHTML = '⚙️ 管理';
                     adminLink.style.cssText = 'background:var(--gradient-primary);color:white;padding:8px 16px;border-radius:20px;';
@@ -237,14 +240,14 @@
                     var li = sn.querySelector('a[href="/blog/pages/login.html"]');
                     if (li) {
                         var pi = document.createElement('a');
-                        pi.href = '/blog/pages/profile.html';
+                        pi.setAttribute('href', '/blog/pages/profile.html');
                         pi.className = 'sidebar-nav-item';
                         pi.innerHTML = '<span>' + this.renderAvatar(user.avatar, 24) + '</span> ' + user.username;
                         li.replaceWith(pi);
                     }
                     if (user.role === 'admin' && !sn.querySelector('.admin-link') && !document.body.classList.contains('admin-page')) {
                         var al = document.createElement('a');
-                        al.href = '/blog/pages/admin.html';
+                        al.setAttribute('href', '/blog/pages/admin.html');
                         al.className = 'sidebar-nav-item admin-link';
                         al.innerHTML = '<span>⚙️</span> 管理';
                         sn.appendChild(al);
@@ -262,6 +265,46 @@
                         }
                     }
                     if (sn2) sn2.textContent = user.username;
+                }
+            }
+        },
+
+        clearAuthUI() {
+            this.currentUser = null;
+            var navLinks = document.querySelector('.nav-links');
+            if (navLinks) {
+                var userLink = navLinks.querySelector('.user-link');
+                if (userLink) {
+                    var loginLink = document.createElement('a');
+                    loginLink.setAttribute('href', '/blog/pages/login.html');
+                    loginLink.className = 'login-link';
+                    loginLink.textContent = '🔐';
+                    userLink.replaceWith(loginLink);
+                }
+                var adminLink = navLinks.querySelector('.admin-link');
+                if (adminLink) adminLink.remove();
+            }
+            var sidebar = document.getElementById('mobile-sidebar');
+            if (sidebar) {
+                var sn = sidebar.querySelector('.sidebar-nav');
+                if (sn) {
+                    var pi = sn.querySelector('a[href="/blog/pages/profile.html"]');
+                    if (pi) {
+                        var li = document.createElement('a');
+                        li.setAttribute('href', '/blog/pages/login.html');
+                        li.className = 'sidebar-nav-item';
+                        li.innerHTML = '<span>🔐</span> 登录';
+                        pi.replaceWith(li);
+                    }
+                    var al = sn.querySelector('.admin-link');
+                    if (al) al.remove();
+                }
+                var sh = sidebar.querySelector('.sidebar-header');
+                if (sh) {
+                    var sa = sh.querySelector('.sidebar-avatar');
+                    var sn2 = sh.querySelector('h3');
+                    if (sa) sa.textContent = '💫';
+                    if (sn2) sn2.textContent = 'Wuming Blog';
                 }
             }
         },

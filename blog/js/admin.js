@@ -6,6 +6,8 @@ let currentUser = null;
 let allCategories = [];
 let allTags = [];
 
+window.__navigate = window.__navigate || function (url) { window.location.href = url; };
+
 // 初始化
 async function initAdminPage() {
     await checkLogin();
@@ -37,14 +39,14 @@ async function checkLogin() {
         // 检查是否登录
         if (!data.success || !data.loggedin || !data.user) {
             console.log('未登录，跳转到登录页');
-            window.location.href = '/blog/pages/login.html';
+            window.__navigate('/blog/pages/login.html');
             return;
         }
 
         // 检查是否是管理员
         if (data.user.role !== 'admin') {
             Toast.error('您没有管理员权限');
-            setTimeout(() => window.location.href = '/', 1500);
+            setTimeout(() => window.__navigate('/'), 1500);
             return;
         }
 
@@ -52,7 +54,7 @@ async function checkLogin() {
         updateUserInfo();
     } catch (err) {
         console.error('登录检查失败:', err);
-        window.location.href = '/blog/pages/login.html';
+        window.__navigate('/blog/pages/login.html');
     }
 }
 
@@ -191,7 +193,10 @@ function initLogout() {
         try {
             await fetch('/blog/api/auth.php?action=logout');
             Toast.success('已退出登录');
-            setTimeout(() => window.location.href = '/blog/pages/login.html', 1000);
+            if (window.WumingBlog && window.WumingBlog.clearAuthUI) {
+                window.WumingBlog.clearAuthUI();
+            }
+            setTimeout(() => window.__navigate('/blog/pages/login.html'), 1000);
         } catch (err) {
             Toast.error('退出失败，请重试');
         }
@@ -508,9 +513,10 @@ async function savePost() {
             Toast.error(data.message || '保存失败');
         }
     } catch (err) {
-        Toast.error('网络错误');
+        Toast.error('加载文章失败');
     }
 }
+window.editPost = editPost;
 
 // 删除文章
 async function deletePost(id) {
@@ -541,6 +547,7 @@ async function deletePost(id) {
         Toast.error('网络错误');
     }
 }
+window.deletePost = deletePost;
 
 // 删除评论
 async function deleteComment(id) {
@@ -571,6 +578,7 @@ async function deleteComment(id) {
         Toast.error('网络错误');
     }
 }
+window.deleteComment = deleteComment;
 
 // HTML转义
 function escapeHtml(text) {

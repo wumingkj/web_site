@@ -243,7 +243,10 @@
         try {
             await fetch('/blog/api/auth.php?action=logout', { credentials: 'same-origin' });
             Toast.success('已退出登录');
-            setTimeout(function() { window.location.href = '/blog/'; }, 1000);
+            if (window.WumingBlog && window.WumingBlog.clearAuthUI) {
+                window.WumingBlog.clearAuthUI();
+            }
+            setTimeout(function() { (window.__navigate || function(u) { window.location.href = u; })('/blog/'); }, 1000);
         } catch (err) { Toast.error('退出失败，请重试'); }
     };
 

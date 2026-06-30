@@ -183,8 +183,6 @@
 
         // 排除特殊页面（独立布局，不走 SPA）
         if (href.indexOf('post3d') !== -1 ||
-            href.indexOf('/admin') !== -1 ||
-            href.indexOf('/login') !== -1 ||
             href === '/blog/50x.html' ||
             href === '/blog/404.html') return;
 
@@ -222,4 +220,7 @@
 
     // 初始历史记录
     history.replaceState({ href: window.location.pathname + window.location.search }, '', window.location.href);
+
+    // 暴露全局导航函数，供 login.js 等脚本使用，避免 location.href 打断音乐/live2d
+    window.__navigate = loadPage;
 })();
