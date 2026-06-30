@@ -33,7 +33,7 @@
         // 去掉 query 和 hash
         var path = href.split('?')[0].split('#')[0];
         // 去掉开头的 /blog/
-        path = path.replace(/^\/blog_ref\//, '');
+        path = path.replace(/^\/blog\//, '');
         // 首页
         if (path === '' || path === 'index.html') return '/blog/fragments/home.html';
         // 去掉 pages/ 前缀
